@@ -83,5 +83,6 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: 'udealio-web.com' }
+  config.action_mailer.default_url_options = { host: 'http://salty-caverns-9147.herokuapp.com/' }
+  config.assets.version = ENV.fetch('ASSETS_VERSION')
 end
