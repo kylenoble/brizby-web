@@ -29,8 +29,6 @@ module V1
          else
            render :json => {}.to_json, :status => :unprocessable_entity
          end
-         
-
        }
      end
     end
