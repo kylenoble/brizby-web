@@ -1,5 +1,6 @@
 module V1
   class Api::V1::SessionsController < Devise::SessionsController
+    protect_from_forgery :except => [:create, :destroy]
     def create
      self.resource = warden.authenticate!(auth_options)
      sign_in(resource_name, resource)
