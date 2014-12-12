@@ -1,28 +1,56 @@
 module V1
   class Api::V1::SessionsController < Devise::SessionsController
-    protect_from_forgery :except => [:create, :destroy]
+    respond_to :json
+    skip_before_filter :verify_authenticity_token, if: :json_request?
+
+    acts_as_token_authentication_handler_for User, fallback_to_devise: false
+    skip_before_filter :authenticate_entity_from_token!
+    skip_before_filter :authenticate_entity!
+    skip_before_filter :verify_signed_out_user
+
     def create
-     self.resource = warden.authenticate!(auth_options)
-     sign_in(resource_name, resource)
-   
-     current_api_v1_user.update authentication_token: nil
-   
-     render :json => {
-       :user => current_api_v1_user,
-       :status => :ok,
-       :authentication_token => current_api_v1_user.authentication_token
-     }
+      warden.authenticate!(:scope => resource_name)
+      @user = current_api_v1_user
+
+      respond_to do |format|
+        format.json {
+          render json: {
+            message:    'Logged in',
+            auth_token: @user.authentication_token,
+            email: @user.email
+          }, status: :ok
+        }
+      end
     end
 
-    # DELETE /resource/sign_out
     def destroy
-      if current_api_v1_user
-        current_api_v1_user.update authentication_token: nil
-        signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
-        render :json => {}.to_json, :status => :ok
+      if api_v1_user_signed_in?
+        @user = current_api_v1_user
+        @user.authentication_token = nil
+        @user.save
+
+        respond_to do |format|
+          format.json {
+            render json: {
+              message: 'Logged out successfully.'
+            }, status: :ok
+          }
+        end
       else
-        render :json => {}.to_json, :status => :unprocessable_entity
+        respond_to do |format|
+          format.json {
+            render json: {
+              message: 'Failed to log out. User must be logged in.'
+            }, status: :ok
+          }
+        end
       end
+    end
+
+    private
+
+    def json_request?
+      request.format.json?
     end
   end
 end
