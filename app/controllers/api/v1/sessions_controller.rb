@@ -8,6 +8,7 @@ module V1
     skip_before_filter :authenticate_entity!
     skip_before_filter :verify_signed_out_user
 
+
     def create
       warden.authenticate!(:scope => resource_name)
       @user = current_api_v1_user
