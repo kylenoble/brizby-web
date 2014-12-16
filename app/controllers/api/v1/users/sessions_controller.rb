@@ -1,5 +1,5 @@
 module V1
-  class Api::V1::SessionsController < Devise::SessionsController
+  class Api::V1::Users::SessionsController < Devise::SessionsController
     respond_to :json
     skip_before_filter :verify_authenticity_token, if: :json_request?
 
@@ -13,15 +13,11 @@ module V1
       warden.authenticate!(:scope => resource_name)
       @user = current_api_v1_user
 
-      respond_to do |format|
-        format.json {
-          render json: {
-            message:    'Logged in',
-            auth_token: @user.authentication_token,
-            email: @user.email
-          }, status: :ok
-        }
-      end
+      render json: {
+        message:    'Logged in',
+        auth_token: @user.authentication_token,
+        email: @user.email
+      }, status: :ok
     end
 
     def destroy

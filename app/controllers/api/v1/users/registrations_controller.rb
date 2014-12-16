@@ -1,5 +1,5 @@
 module V1
-  class Api::V1::RegistrationsController < Devise::RegistrationsController
+  class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
     def create
       @user = User.create(user_params)
       if @user.save
@@ -13,7 +13,7 @@ module V1
     private
 
     def user_params
-      params.require(:user).permit(:email, :password, :username)
+      params.require(:api_v1_user).permit(:email, :password, :username)
     end
   end
 end
