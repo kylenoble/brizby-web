@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141216021612) do
+ActiveRecord::Schema.define(version: 20141216062753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,26 @@ ActiveRecord::Schema.define(version: 20141216021612) do
   add_index "businesses", ["authentication_token"], name: "index_businesses_on_authentication_token", using: :btree
   add_index "businesses", ["email"], name: "index_businesses_on_email", unique: true, using: :btree
   add_index "businesses", ["reset_password_token"], name: "index_businesses_on_reset_password_token", unique: true, using: :btree
+
+  create_table "deals", force: true do |t|
+    t.string   "name"
+    t.float    "price"
+    t.datetime "expires_at"
+    t.text     "description"
+    t.integer  "business_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deals", ["business_id"], name: "index_deals_on_business_id", using: :btree
+
+  create_table "deals_users", force: true do |t|
+    t.integer "deal_id"
+    t.integer "user_id"
+  end
+
+  add_index "deals_users", ["deal_id", "user_id"], name: "index_deals_users_on_deal_id_and_user_id", using: :btree
+  add_index "deals_users", ["user_id"], name: "index_deals_users_on_user_id", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false

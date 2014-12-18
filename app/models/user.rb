@@ -10,4 +10,6 @@ class User < ActiveRecord::Base
   	:case_sensitive => false
   	}, 
   	:presence => true
+
+  has_and_belongs_to_many :deals
 end

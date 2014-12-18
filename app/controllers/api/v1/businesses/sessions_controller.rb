@@ -3,16 +3,15 @@ module V1
     respond_to :json
     skip_before_filter :verify_authenticity_token, if: :json_request?
 
-    acts_as_token_authentication_handler_for Business, fallback_to_devise: false
     skip_before_filter :authenticate_entity_from_token!
     skip_before_filter :authenticate_entity!
     skip_before_filter :verify_signed_out_user
-
+    before_filter :authenticate_business!, :only => :destroy
 
     def create
       warden.authenticate!(:scope => resource_name)
       @business = current_api_v1_business
-
+      
       render json: {
         message:    'Logged in',
         auth_token: @business.authentication_token,
@@ -21,8 +20,8 @@ module V1
     end
 
     def destroy
-      if api_v1_business_signed_in?
-        @business = current_api_v1_business
+      if business_signed_in?
+        @business = current_business
         @business.authentication_token = nil
         @business.save
 
@@ -34,6 +33,8 @@ module V1
           }
         end
       else
+        logger.info "business #{current_business}"
+        puts business_signed_in?
         respond_to do |format|
           format.json {
             render json: {
