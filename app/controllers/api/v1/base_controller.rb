@@ -4,6 +4,8 @@ class Api::V1::BaseController < ApplicationController
   respond_to :json
   skip_before_filter :verify_authenticity_token, if: :json_request?
 
+  @test = "test"
+
   private
 
   def json_request?

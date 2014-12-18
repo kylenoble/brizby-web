@@ -2,15 +2,7 @@ module V1
   class Api::V1::DealsController < Api::V1::BaseController
     before_action :set_deal, only: [:show, :edit, :update, :destroy]
 
-    before_filter do
-      if current_business != nil
-        puts "business"
-        :authenticate_business!        
-      else
-        puts "user"
-        :authenticate_user!
-      end
-    end
+    before_filter :authenticate_user!
 
     def index
       @deals = Deal.all
@@ -46,6 +38,12 @@ module V1
     end
 
     private
+
+      def authenticate_user!
+        return if business_signed_in?
+        super
+      end
+
       def set_deal
         @deal = Deal.find(params[:id])
       end
