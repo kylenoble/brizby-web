@@ -1,5 +1,5 @@
 module V1
-	class UsersController < Api::BaseApiController
+	class Api::V1::UsersController < BaseController
 
 	end
 end

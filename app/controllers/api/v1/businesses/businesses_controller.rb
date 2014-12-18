@@ -1,5 +1,5 @@
 module V1
-	class BusinessesController < Api::BaseApiController
+	class Api::V1::BusinessesController < BaseController
 
 	end
 end
