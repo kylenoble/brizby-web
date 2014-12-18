@@ -1,5 +1,7 @@
-module V1
-	class Api::V1::UsersController < BaseController
+module Api
+	module V1
+		class Api::V1::UsersController < BaseController
 
+		end
 	end
 end
