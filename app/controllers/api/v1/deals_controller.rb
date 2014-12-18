@@ -1,5 +1,5 @@
 module V1
-  class Api::V1::DealsController < Api::V1::BaseApiController
+  class Api::V1::DealsController < Api::V1::BaseController
     before_action :set_deal, only: [:show, :edit, :update, :destroy]
 
     before_filter do

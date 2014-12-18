@@ -1,5 +1,5 @@
 module V1
-  class Api::V1::BaseApiController::Businesses::SessionsController < Devise::SessionsController
+  class Api::V1::Businesses::SessionsController < Devise::SessionsController
     respond_to :json
     skip_before_filter :verify_authenticity_token, if: :json_request?
 
