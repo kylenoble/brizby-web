@@ -19,7 +19,6 @@ class ProfilePic < ActiveRecord::Base
 	validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 	validates_attachment_size :image, :less_than => 2.megabytes
 
-	attr_accessor :image_data,:image
   before_save :decode_image_data
 
   def decode_image_data
