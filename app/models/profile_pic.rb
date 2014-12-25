@@ -3,8 +3,8 @@ class ProfilePic < ActiveRecord::Base
 	belongs_to :business 
 
 	validates :image, :presence => true
-
-	has_attached_file :image, 
+	do_not_validate_attachment_file_type :image
+	has_attached_file :image, :default_url => "/whatever-who-cares.png",
 						:styles => { :lrg => "720x720>", :med => "480x480>", :sml => "240x240>" }, 
 						:whiny => false,
 			      :storage => :s3,
@@ -16,13 +16,5 @@ class ProfilePic < ActiveRecord::Base
       			},
     				:path => "api/v1/profile_pic/:attachment/:id/:style/:filename",
 						:url => "udealio.profile-pictures.s3-website-us-west-1.amazonaws.com" 
-	validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 	validates_attachment_size :image, :less_than => 2.megabytes
-
-  before_save :decode_image_data
-
-  def decode_image_data
-  	puts "decoding"
-  	puts "this is the image #{self.image}"
-  end
 end

@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :profile_pic do
-    image { Faker::Avatar.image }
+    pre_image = Base64.encode64(Faker::Avatar.image)
+    image { "data:image/png;base64," + pre_image }
   end
 end

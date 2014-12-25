@@ -13,12 +13,11 @@ describe Api::V1::Users::RegistrationsController do
       before(:each) do
         @user_attributes = FactoryGirl.attributes_for :user
         @profile_pic = FactoryGirl.attributes_for :profile_pic
-        puts @profile_pic
         post :create, { :api_v1_user => {
                           username: @user_attributes[:username], 
                           email: @user_attributes[:email], 
                           password: @user_attributes[:password],
-                          :profile_pic_attributes => {
+                          :profile_pic => {
                             image: @profile_pic[:image]
                           } 
                         } 
@@ -40,7 +39,7 @@ describe Api::V1::Users::RegistrationsController do
       before(:each) do
         #notice I'm not including the username
         @invalid_user_attributes = { password: "12345678",
-                                    email: "sup@sup.com"}
+                                    email: "sup@sup.com", image: @profile_pic[:image]}
         post :create, { api_v1_user: @invalid_user_attributes }, format: :json
       end
 
