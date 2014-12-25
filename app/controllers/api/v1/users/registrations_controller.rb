@@ -14,7 +14,7 @@ module V1
     private
 
     def user_params
-      params.require(:api_v1_user).permit(:email, :password, :username, profile_pic_attributes: [:image])
+      params.require(:api_v1_user).permit(:email, :password, :username, profile_pic_attributes: [:image], :profile_pic)
     end
   end
 end
