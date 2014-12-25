@@ -23,20 +23,6 @@ class ProfilePic < ActiveRecord::Base
 
   def decode_image_data
   	puts "decoding"
-    if self.image
-    		puts "data is present"
-        # If image_data is present, it means that we were sent an image over
-        # JSON and it needs to be decoded.  After decoding, the image is processed
-        # normally via Paperclip.
-        if self.image
-        		puts "working"
-            data = StringIO.new(Base64.decode64(self.image))
-            data.class.class_eval {attr_accessor :original_filename, :content_type}
-            data.original_filename = self.id.to_s + ".png"
-            data.content_type = "image/png"
-
-            self.image = data
-        end
-    end
+  	puts "this is the image #{self.image}"
   end
 end
