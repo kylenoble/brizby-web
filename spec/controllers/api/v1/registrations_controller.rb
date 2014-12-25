@@ -17,7 +17,7 @@ describe Api::V1::Users::RegistrationsController do
                           username: @user_attributes[:username], 
                           email: @user_attributes[:email], 
                           password: @user_attributes[:password],
-                          :profile_pic => {
+                          :profile_pic_attributes => {
                             image: @profile_pic[:image]
                           } 
                         } 
