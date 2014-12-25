@@ -28,6 +28,7 @@ describe Api::V1::Users::RegistrationsController do
 
       it "renders the json representation for the user record just created" do
         user_response = JSON.parse(response.body, symbolize_names: true)
+        puts user_response
         expect(user_response[:data][:email]).to eql @user_attributes[:email]
         expect(user_response[:state][:code]).to eq 0
       end
