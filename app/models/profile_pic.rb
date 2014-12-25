@@ -19,22 +19,16 @@ class ProfilePic < ActiveRecord::Base
 	validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 	validates_attachment_size :image, :less_than => 2.megabytes
 
-  before_save :decode_image_data
+  before_save :process_profile_pic
 
-  def decode_image_data
-
-    if self.image_data.present?
-        # If image_data is present, it means that we were sent an image over
-        # JSON and it needs to be decoded.  After decoding, the image is processed
-        # normally via Paperclip.
-        if self.image_data.present?
-            data = StringIO.new(Base64.decode64(self.image_data))
-            data.class.class_eval {attr_accessor :original_filename, :content_type}
-            data.original_filename = self.id.to_s + ".png"
-            data.content_type = "image/png"
-
-            self.profile_pic_attributes[:image] = data
-        end
-    end
-  end
+  def process_profile_pic
+	  if params[:api_v1_user][:username] && params[:api_v1_user][:profile_pic_attributes][:image]
+	  	puts "decoding image"
+	    data = StringIO.new(Base64.decode64(params[:api_v1_user][:profile_pic_attributes][:image]))
+	    data.class.class_eval { attr_accessor :original_filename, :content_type }
+	    data.original_filename = self.id.to_s + ".png"
+	    data.content_type = "image/png"
+	    params[:api_v1_user][:profile_pic_attributes][:image] = data
+	  end
+	end
 end
