@@ -3,16 +3,17 @@ module V1
     def create
       @business = Business.create(business_params)
       if @business.save
+        sign_in(@business)
         render :json => {:state => {:code => 0}, :data => @business }
       else
-        render :json => {:state => {:code => 1, :messages => @business.errors.full_messages} }
+        render :json => {:state => {:code => 1, :messages => @business.errors.full_messages} }, status: 422
       end
     end
     
     private
 
     def business_params
-      params.require(:api_v1_business).permit(:email, :password, :password_confirmation)
+      params.require(:api_v1_business).permit(:email, :password, profile_pic_attributes: [:image])
     end
   end
 end

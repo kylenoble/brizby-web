@@ -6,4 +6,6 @@ class Business < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :authentication_keys => [:email]
 
   has_many :deals
+  has_one :profile_pic, :dependent => :destroy
+	accepts_nested_attributes_for :profile_pic, :allow_destroy => true
 end

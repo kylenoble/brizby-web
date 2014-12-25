@@ -23,6 +23,9 @@ gem "uglifier"
 gem "unicorn"
 gem "simple_token_authentication"
 gem "devise"
+gem "paperclip"
+gem "aws-sdk"
+gem 'lodash-rails'
 
 group :development do
   gem "bundler-audit"
@@ -36,11 +39,12 @@ group :development, :test do
   gem "dotenv-rails"
   gem "factory_girl_rails"
   gem "pry-rails"
-  gem "rspec-rails", "~> 3.0.0"
+  gem "rspec-rails"
+  gem 'faker'
 end
 
 group :test do
-  gem "capybara-webkit", ">= 1.2.0"
+  gem "capybara-webkit"
   gem "database_cleaner"
   gem "formulaic"
   gem "launchy"

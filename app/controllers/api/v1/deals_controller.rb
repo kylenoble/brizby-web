@@ -2,7 +2,7 @@ module V1
   class Api::V1::DealsController < Api::V1::BaseController
     before_action :set_deal, only: [:show, :edit, :update, :destroy]
 
-    before_filter :authenticate_user!
+    before_filter :authenticate_business!, except: [:index, :show]
 
     def index
       @deals = Deal.all
@@ -24,7 +24,7 @@ module V1
     def create
       @deal = Deal.new(deal_params)
       @deal.save
-      respond_with(@deal)
+      render json: @deal.to_json
     end
 
     def update
@@ -49,7 +49,7 @@ module V1
       end
 
       def deal_params
-        params.require(:deal).permit(:name, :price, :expires_at, :description)
+        params.require(:deal).permit(:name, :price, :expires_at, :description, :business_id)
       end
   end
 end

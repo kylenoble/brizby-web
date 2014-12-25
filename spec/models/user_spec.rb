@@ -1,14 +1,20 @@
 require 'rails_helper'
 require 'spec_helper'
-require 'user'
 
-RSpec.describe User, :type => :model do
-	it 'create users' do
-		user = User.new(email: "test@test.com", password: "supgirl", username: "test")
-		assert user.email == "test@test.com"
-		assert user.password == "supgirl"
-		assert user.username == "test"
-		assert user.authentication_token != ""
-	end
+describe User do
+  before { @user = FactoryGirl.build(:user) }
+
+  subject { @user }
+
+  it { should respond_to(:username) }
+  it { should respond_to(:email) }
+  it { should respond_to(:password) }
+  it { should validate_presence_of(:email) }
+	it { should validate_uniqueness_of(:email) }
+	it { should validate_presence_of(:username) }
+	it { should validate_uniqueness_of(:username) }
+	it { should allow_value('example@domain.com').for(:email) }
+
+
+  it { should be_valid }
 end
-

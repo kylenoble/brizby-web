@@ -11,12 +11,12 @@ module V1
     def create
       warden.authenticate!(:scope => resource_name)
       @business = current_api_v1_business
-      puts business_signed_in?
 
       render json: {
         message:    'Logged in',
         auth_token: @business.authentication_token,
-        email: @business.email
+        email: @business.email,
+        profile_pic: @business.profile_pic.image
       }, status: :ok
     end
 

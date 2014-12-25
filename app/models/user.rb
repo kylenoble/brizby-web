@@ -12,4 +12,6 @@ class User < ActiveRecord::Base
   	:presence => true
 
   has_and_belongs_to_many :deals
+  has_one :profile_pic, :dependent => :destroy
+  accepts_nested_attributes_for :profile_pic, :allow_destroy => true
 end
