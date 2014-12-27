@@ -5,7 +5,7 @@ class ProfilePic < ActiveRecord::Base
 	validates :image, :presence => true
 	do_not_validate_attachment_file_type :image
 	has_attached_file :image, :default_url => "/whatever-who-cares.png",
-						:styles => { :reg => "300x300>" }, 
+						:styles => { :med => "600x600>" }, 
 						:whiny => false,
 			      :storage => :s3,
 			      :bucket  => ENV['AWS_BUCKET'],
