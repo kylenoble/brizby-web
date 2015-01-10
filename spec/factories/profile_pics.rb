@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :profile_pic do
-    pre_image = Base64.encode64(Faker::Avatar.image)
-    image { "data:image/png;base64," + pre_image }
+    direct_upload_url ("http://www.sports-logos-screensavers.com/user/Boston_Red_Sox.jpg")
   end
 end

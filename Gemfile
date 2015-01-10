@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 ruby "2.1.5"
 
+gem "aws-sdk"
 gem "bourbon", "~> 3.2.1"
 gem "coffee-rails"
 gem "delayed_job_active_record"
@@ -24,8 +25,8 @@ gem "unicorn"
 gem "simple_token_authentication"
 gem "devise"
 gem "paperclip"
-gem "aws-sdk"
 gem 'lodash-rails'
+gem 'daemons'
 
 group :development do
   gem "bundler-audit"
@@ -51,6 +52,7 @@ group :test do
   gem "shoulda-matchers", require: false
   gem "timecop"
   gem "webmock"
+  gem 'shoulda-callback-matchers'
 end
 
 group :staging, :production do

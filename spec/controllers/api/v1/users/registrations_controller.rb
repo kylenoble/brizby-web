@@ -13,21 +13,21 @@ describe Api::V1::Users::RegistrationsController do
       before(:each) do
         @user_attributes = FactoryGirl.attributes_for :user
         @profile_pic = FactoryGirl.attributes_for :profile_pic
-        puts @profile_pic
         post :create, { :api_v1_user => {
                           username: @user_attributes[:username], 
                           email: @user_attributes[:email], 
                           password: @user_attributes[:password],
                           :profile_pic_attributes => {
-                            image: @profile_pic[:image]
+                            direct_upload_url: @profile_pic[:direct_upload_url]
                           } 
                         } 
                       }, format: :json
-        puts @user_attributes
+              puts @user_attributes[:username]
       end
 
       it "renders the json representation for the user record just created" do
         user_response = JSON.parse(response.body, symbolize_names: true)
+        puts user_response
         expect(user_response[:data][:email]).to eql @user_attributes[:email]
         expect(user_response[:state][:code]).to eq 0
       end

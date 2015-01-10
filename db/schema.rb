@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141220033247) do
+ActiveRecord::Schema.define(version: 20150109203243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,9 +81,12 @@ ActiveRecord::Schema.define(version: 20141220033247) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.string   "direct_upload_url",                  null: false
+    t.boolean  "processed",          default: false, null: false
   end
 
   add_index "profile_pics", ["business_id"], name: "index_profile_pics_on_business_id", using: :btree
+  add_index "profile_pics", ["processed"], name: "index_profile_pics_on_processed", using: :btree
   add_index "profile_pics", ["user_id"], name: "index_profile_pics_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
@@ -106,6 +109,6 @@ ActiveRecord::Schema.define(version: 20141220033247) do
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", using: :btree
 
 end
