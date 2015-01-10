@@ -38,7 +38,7 @@ class ProfilePic < ActiveRecord::Base
     profile_pic.processed = true
     profile_pic.save
     
-    #s3.buckets[BUCKET_NAME].objects[direct_upload_url_data].delete
+    s3.buckets[BUCKET_NAME].objects[direct_upload_url_data].delete
   end
       
   protected
