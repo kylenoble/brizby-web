@@ -3,18 +3,8 @@ class ProfilePic < ActiveRecord::Base
 	belongs_to :business 
 
 	BUCKET_NAME = Rails.application.secrets.aws['s3_bucket_name']
-	has_attached_file :image, :default_url => "/whatever-who-cares.png",
-						:styles => { :medium => "600x600>" }, 
-			      :storage => :s3,
-			      :bucket  => ENV['AWS_BUCKET'],
-			      :s3_permissions => :private,
-    				:s3_credentials => { 
-    					:access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      				:secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'] 
-      			},
-    				:path => "api/v1/profile-pic/:attachment/:id/:style/:filename",
-						:url => "s3-website-us-west-1.amazonaws.com/udealio/" 
-  validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/  
+
+  validates_attachment :image
   validates :direct_upload_url, presence: true
    
   before_validation :set_upload_attributes
@@ -28,12 +18,12 @@ class ProfilePic < ActiveRecord::Base
   
   # Final upload processing step
   def self.transfer_and_cleanup(id)
-  	puts "working transfer_and_cleanup"
     profile_pic = ProfilePic.find(id)
     direct_upload_url_data = URI.parse(profile_pic.direct_upload_url).path[9..-1].to_s
     s3 = AWS::S3.new
     
-    profile_pic.image = URI.parse(URI.escape(profile_pic.direct_upload_url))
+    paperclip_file_path = "profile-pics/#{id}/original/#{direct_upload_url_data}"
+    s3.buckets[BUCKET_NAME].objects[paperclip_file_path].copy_from("#{direct_upload_url_data}")
 
     profile_pic.processed = true
     profile_pic.save
