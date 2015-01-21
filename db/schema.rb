@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20150121040309) do
   add_index "businesses", ["reset_password_token"], name: "index_businesses_on_reset_password_token", unique: true, using: :btree
 
   create_table "comments", force: true do |t|
+    t.integer  "deal_id"
     t.integer  "user_id"
     t.integer  "business_id"
     t.text     "text"
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 20150121040309) do
   end
 
   add_index "comments", ["business_id"], name: "index_comments_on_business_id", using: :btree
+  add_index "comments", ["deal_id"], name: "index_comments_on_deal_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "deals", force: true do |t|
