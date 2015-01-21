@@ -27,6 +27,7 @@ gem "devise"
 gem "paperclip"
 gem 'lodash-rails'
 gem 'daemons'
+gem 'geocoder'
 
 group :development do
   gem "bundler-audit"

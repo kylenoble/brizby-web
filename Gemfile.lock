@@ -110,6 +110,7 @@ GEM
       activesupport
       capybara
       i18n
+    geocoder (1.2.6)
     high_voltage (2.2.1)
     highline (1.6.21)
     hike (1.2.3)
@@ -283,6 +284,7 @@ DEPENDENCIES
   faker
   flutie
   formulaic
+  geocoder
   high_voltage
   i18n-tasks
   jquery-rails

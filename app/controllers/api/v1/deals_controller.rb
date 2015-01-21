@@ -39,11 +39,6 @@ module V1
 
     private
 
-      def authenticate_user!
-        return if business_signed_in?
-        super
-      end
-
       def set_deal
         @deal = Deal.find(params[:id])
       end
