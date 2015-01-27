@@ -2,9 +2,10 @@ class Businesses::RegistrationsController < Devise::RegistrationsController
   def create
     @business = Business.create(business_params)
     if @business.save
+      sign_in(@business)
       render :json => {:state => {:code => 0}, :data => @business }
     else
-      render :json => {:state => {:code => 1, :messages => @business.errors.full_messages} }
+      render :json => {:state => {:code => 1, :messages => @business.errors.full_messages} }, status: 422
     end
   end
   

@@ -1,6 +1,6 @@
 module Api
 	module V1
-		class Api::V1::UsersController < Api::V1::BaseController
+		class Api::V1::Users::UsersController < Api::V1::BaseController
 			respond_to :json
 			#before_filter :authenticate_user!
 

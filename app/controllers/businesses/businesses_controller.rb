@@ -1,3 +1,3 @@
-class Businesses::RegistrationsController < Devise::RegistrationsController
+class Businesses::BusinessesController < ApplicationController
 
 end
