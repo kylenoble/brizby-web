@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'activities/index'
+
   resources :comments
 
 	devise_for :users, :skip => [:sessions, :passwords, :registrations]
@@ -7,6 +9,7 @@ Rails.application.routes.draw do
 		resources :profile_pics, only: [:create, :destroy]
 	end
 	resources :deals
+	resources :activities
 
 	namespace :api do
 		namespace :v1 do
@@ -18,7 +21,7 @@ Rails.application.routes.draw do
 			resources :businesses do
 				resources :profile_pics, only: [:create, :destroy]
 			end
-			resources :deals
+			resources :deals, :activities, :users
 		end
 	end
 	

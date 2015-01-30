@@ -29,6 +29,10 @@ gem 'lodash-rails'
 gem 'daemons'
 gem 'geocoder'
 gem 'public_activity'
+gem 'jbuilder'
+gem 'kaminari'
+gem 'responders'
+gem  'nokogiri'
 
 group :development do
   gem "bundler-audit"
