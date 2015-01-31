@@ -1,6 +1,5 @@
 class Api::V1::BaseController < Api::BaseController
     before_action :set_resource, only: [:destroy, :show, :update]
-    respond_to :json
 
     # POST /api/{plural_resource_name}
     def create
@@ -63,7 +62,7 @@ class Api::V1::BaseController < Api::BaseController
       # Returns the allowed parameters for pagination
       # @return [Hash]
       def page_params
-        params.permit(:page, :page_size, :format)
+        params.permit(:page, :page_size)
       end
 
       # The resource class based on the controller

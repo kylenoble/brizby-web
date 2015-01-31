@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 	resources :deals
 	resources :activities
 
-	namespace :api do
+	namespace :api, path: '/', constraints: { subdomain: 'api' } do
 		namespace :v1 do
 			devise_for :users, module: 'api/v1/users' 
 			resources :users do 
