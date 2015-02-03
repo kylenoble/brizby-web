@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   resources :comments
 
-	devise_for :users, :skip => [:sessions, :passwords, :registrations]
+	devise_for :users
 	devise_for :businesses
 	resources :businesses do
 		resources :profile_pics, only: [:create, :destroy]

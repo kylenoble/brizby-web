@@ -1,8 +1,8 @@
 class Deal < ActiveRecord::Base
+	include PublicActivity::Model
+
 	belongs_to :businesses
 	has_and_belongs_to_many :users
-
-	validates :business, :presence => true
 
 	validates :business_id, presence: true
 	validates :name, presence: true

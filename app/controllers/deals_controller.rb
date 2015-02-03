@@ -3,9 +3,11 @@ class DealsController < ApplicationController
 
   before_filter :authenticate_business!, except: [:index, :show]
 
+  respond_to :html
+
   def index
     @deals = Deal.all
-    render json: @deals.to_json
+    respond_with(@deals)
   end
 
   def show
@@ -14,7 +16,7 @@ class DealsController < ApplicationController
 
   def new
     @deal = Deal.new
-    render json: @deal.to_json 
+    respond_with(@deal)
   end
 
   def edit
@@ -22,8 +24,13 @@ class DealsController < ApplicationController
 
   def create
     @deal = Deal.new(deal_params)
-    @deal.save
-    render json: @deal.to_json
+    @business = current_business
+    @deal.business_id = @business.id
+
+    if @deal.save
+      @deal.create_activity :create, owner: @business
+    end
+    respond_with(@deal)
   end
 
   def update

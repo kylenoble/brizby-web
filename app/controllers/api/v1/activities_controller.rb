@@ -1,4 +1,4 @@
-class Api::V1::BusinessesController < Api::V1::BaseController
+class Api::V1::ActivitiesController < Api::V1::BaseController
   #before_filter :authenticate_user!
   
   private

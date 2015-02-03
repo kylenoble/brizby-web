@@ -5,6 +5,7 @@ class Api::V1::BaseController < Api::BaseController
     def create
       set_resource(resource_class.new(resource_params))
 
+          
       if get_resource.save
         render :show, status: :created
       else
@@ -22,9 +23,11 @@ class Api::V1::BaseController < Api::BaseController
     def index
       plural_resource_name = "@#{resource_name.pluralize}"
       resources = resource_class.where(query_params)
+                                .order(order_params[:order])
                                 .page(page_params[:page])
                                 .per(page_params[:page_size])
-
+                                
+      puts query_params
       instance_variable_set(plural_resource_name, resources)
       respond_with instance_variable_get(plural_resource_name)
     end
@@ -57,6 +60,14 @@ class Api::V1::BaseController < Api::BaseController
       # @return [Hash]
       def query_params
         {}
+      end
+
+      # Returns the allowed parameters for order
+      # Override this method in each API controller
+      # to permit additional parameters to search on
+      # @return [Hash]
+      def order_params
+        params.permit(:order)
       end
 
       # Returns the allowed parameters for pagination

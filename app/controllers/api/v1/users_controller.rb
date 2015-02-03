@@ -13,7 +13,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   	params.require(:api_v1_user).permit(:id, :username, :email, :home_city)
 	end
 
-	 def query_params
+	def query_params
   	params.permit(:id, :username, :email, :home_city)
   end
 end

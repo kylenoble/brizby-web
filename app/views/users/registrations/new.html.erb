@@ -8,7 +8,7 @@
     <%= f.text_field :username, autofocus: true %>
   </div>
 
-  <div class="field">
+  <div class="field col-md-4">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true %>
   </div>
@@ -21,9 +21,16 @@
     <%= f.password_field :password, autocomplete: "off" %>
   </div>
 
+  <div class="field">
+    <%= f.label :profile_pic %>
+    <%= f.fields_for :profile_pic_attributes do |pic| %>
+      <%= pic.file_field :image %>
+    <% end %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>
 <% end %>
 
-<%= render "api/v1/users/shared/links" %>
+<%= render "/users/shared/links" %>

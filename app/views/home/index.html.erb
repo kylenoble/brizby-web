@@ -1,1 +1,10 @@
 <h1>Coming Soon</h1>
+<div>
+<% if user_signed_in? %>
+  <%= link_to "Sign out", destroy_user_session_path, :style=>'text-align:center; margin-top:2rem;', :class => "button", :method => :delete %>
+<% elsif business_signed_in? %>
+	<%= link_to "Sign out", destroy_business_session_path, :style=>'text-align:center; margin-top:2rem;', :class => "button", :method => :delete %>
+<% else %>
+  <%= link_to "Sign in", new_user_session_path, {:style=>'text-align:center; margin-top:2rem;', :class => "button"} %>
+<% end %>
+</div>

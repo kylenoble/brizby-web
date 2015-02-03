@@ -17,6 +17,10 @@ module V1
     
     private
 
+    def query_params
+      params.permit(:email, :password, :username, :order)
+    end
+
     def user_params
       params.require(:api_v1_user).permit(:email, :password, :username, profile_pic_attributes: [:direct_upload_url])
     end
