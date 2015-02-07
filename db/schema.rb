@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150207031725) do
+ActiveRecord::Schema.define(version: 20150207032924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,10 +128,15 @@ ActiveRecord::Schema.define(version: 20150207031725) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.integer  "business_id"
+    t.string   "direct_upload_url",  null: false
+    t.boolean  "processed",          null: false
   end
 
+  add_index "images", ["business_id"], name: "index_images_on_business_id", using: :btree
   add_index "images", ["deal_id"], name: "index_images_on_deal_id", using: :btree
   add_index "images", ["post_id"], name: "index_images_on_post_id", using: :btree
+  add_index "images", ["processed"], name: "index_images_on_processed", using: :btree
 
   create_table "posts", force: true do |t|
     t.text     "body"
