@@ -5,8 +5,10 @@ class Api::V1::BaseController < Api::BaseController
     def create
       set_resource(resource_class.new(resource_params))
 
-          
       if get_resource.save
+        if !params.fetch(:api_v1_deal)[:user_id] 
+          add_activity(resource_class, params[:api_v1_deal][:business_id], "business")
+        end
         render :show, status: :created
       else
         render json: get_resource.errors, status: :unprocessable_entity
@@ -26,8 +28,7 @@ class Api::V1::BaseController < Api::BaseController
                                 .order(order_params[:order])
                                 .page(page_params[:page])
                                 .per(page_params[:page_size])
-                                
-      puts query_params
+                  
       instance_variable_set(plural_resource_name, resources)
       respond_with instance_variable_get(plural_resource_name)
     end
@@ -47,6 +48,21 @@ class Api::V1::BaseController < Api::BaseController
     end
 
     private
+
+      def add_activity(class_name, user, type)
+        if type == "business"
+          @business = Business.find(user)
+        else
+          @user = User.find(user)
+        end
+
+        if class_name == Deal
+          @deal = get_resource
+          @deal.create_activity :create, owner: @business
+        else
+          puts "no activity"
+        end
+      end
 
       # Returns the resource from the created instance variable
       # @return [Object]

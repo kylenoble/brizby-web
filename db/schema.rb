@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150203035520) do
+ActiveRecord::Schema.define(version: 20150207031725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,39 @@ ActiveRecord::Schema.define(version: 20150203035520) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "followships", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "user_follow_id"
+    t.integer  "business_follow_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "followships", ["business_follow_id"], name: "index_followships_on_business_follow_id", using: :btree
+  add_index "followships", ["user_follow_id"], name: "index_followships_on_user_follow_id", using: :btree
+
+  create_table "images", force: true do |t|
+    t.integer  "post_id"
+    t.integer  "deal_id"
+    t.text     "caption"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
+  add_index "images", ["deal_id"], name: "index_images_on_deal_id", using: :btree
+  add_index "images", ["post_id"], name: "index_images_on_post_id", using: :btree
+
+  create_table "posts", force: true do |t|
+    t.text     "body"
+    t.integer  "business_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "posts", ["business_id"], name: "index_posts_on_business_id", using: :btree
 
   create_table "profile_pics", force: true do |t|
     t.integer  "user_id"

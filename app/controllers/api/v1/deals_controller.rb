@@ -1,4 +1,4 @@
-class Api::V1::BusinessesController < Api::V1::BaseController
+class Api::V1::DealsController < Api::V1::BaseController
   #before_filter :authenticate_user!
   
   private
@@ -8,8 +8,12 @@ class Api::V1::BusinessesController < Api::V1::BaseController
     super
   end
 
+  def deal_params
+     params.require(:api_v1_deal).permit(:name, :price, :expires_at, :description, :business_id)
+   end
+
   def query_params
-    params.permit(:trackable_id, :owner_id, :recipient_id)
+    params.permit(:name, :price, :expires_at, :description, :business_id)
   end
 
 end

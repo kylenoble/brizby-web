@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :posts
+
   get 'activities/index'
 
   resources :comments
@@ -10,6 +12,7 @@ Rails.application.routes.draw do
 	end
 	resources :deals
 	resources :activities
+	resources :followships
 
 	namespace :api, path: '/', constraints: { subdomain: 'api' } do
 		namespace :v1 do
@@ -21,7 +24,7 @@ Rails.application.routes.draw do
 			resources :businesses do
 				resources :profile_pics, only: [:create, :destroy]
 			end
-			resources :deals, :activities, :users
+			resources :deals, :activities, :users, :followships
 		end
 	end
 	

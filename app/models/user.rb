@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
   	:case_sensitive => false
   	}, 
   	:presence => true
+  
+  has_many :followships
+  has_many :user_follows, through: :followships
+  has_many :business_follows, through: :followships
 
   has_and_belongs_to_many :deals
   has_one :profile_pic, :dependent => :destroy
