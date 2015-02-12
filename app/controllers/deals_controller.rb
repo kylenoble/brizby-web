@@ -50,6 +50,6 @@ class DealsController < ApplicationController
     end
 
     def deal_params
-      params.require(:deal).permit(:name, :price, :expires_at, :description, :business_id)
+      params.require(:deal).permit(:name, :price, :expires_at, :description, :business_id, images_attributes: [:direct_upload_url])
     end
 end

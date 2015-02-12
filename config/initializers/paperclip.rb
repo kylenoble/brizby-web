@@ -1,4 +1,6 @@
 Paperclip::Attachment.default_options.merge!(
+	url: ':s3_domain_url',
+  path: ':class/:id/:style/:filename',
   storage: :s3,
   s3_credentials: {
     access_key_id:      Rails.application.secrets.aws['access_key_id'],

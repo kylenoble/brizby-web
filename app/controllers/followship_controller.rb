@@ -1,18 +1,18 @@
 class FollowshipController < ApplicationController
 	def create
-		if !followship_params[:user_follow_id]
-			@followship = current_user.followships.create!(:business_follow_id => followship_params[:business_follow_id])
+		if !params[:user_followed_id]
+			@followship = current_user.followships.create!(:business_followed_id => params[:business_followed_id])
 		else
-			@followship = current_user.followships.create!(:user_follow_id => followship_params[:user_follow_id])
+			@followship = current_user.followships.create!(:user_followed_id => params[:user_followed_id])
 		end	
 	end 
 
 	def destroy
 
-		if !followship_params[:user_follow_id]
-			@followship = current_user.followships.business_follow_id.find(params[:business_follow_id])
+		if !params[:user_followed_id]
+			@followship = current_user.followships.business_followed_id.find(params[:business_followed_id])
 		else
-			@followship = current_user.followships.user_follow_id.find(params[:user_follow_id])
+			@followship = current_user.followships.user_followed_id.find(params[:user_followed_id])
 		end
 
 		@followship.destroy
@@ -21,5 +21,6 @@ class FollowshipController < ApplicationController
 	private
 
 	def followship_params
-		params.permit(:user_id, :user_follow_id, :business_follow_id)
+		params.permit(:user_id, :user_followed_id, :business_followed_id)
+	end
 end

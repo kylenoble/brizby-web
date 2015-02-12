@@ -6,8 +6,10 @@ class Api::V1::BaseController < Api::BaseController
       set_resource(resource_class.new(resource_params))
 
       if get_resource.save
-        if !params.fetch(:api_v1_deal)[:user_id] 
+        if params.fetch(:api_v1_deal)[:business_id] 
           add_activity(resource_class, params[:api_v1_deal][:business_id], "business")
+        elsif params.fetch(:api_v1_post)[:business_id] 
+          add_activity(resource_class, params[:api_v1_post][:business_id], "business")
         end
         render :show, status: :created
       else
@@ -58,6 +60,9 @@ class Api::V1::BaseController < Api::BaseController
 
         if class_name == Deal
           @deal = get_resource
+          @deal.create_activity :create, owner: @business
+        elsif class_name == Post
+          @post = get_resource
           @deal.create_activity :create, owner: @business
         else
           puts "no activity"

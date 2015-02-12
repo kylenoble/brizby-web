@@ -9,11 +9,11 @@ class Api::V1::DealsController < Api::V1::BaseController
   end
 
   def deal_params
-     params.require(:api_v1_deal).permit(:name, :price, :expires_at, :description, :business_id)
+     params.require(:api_v1_deal).permit(:name, :price, :expires_at, :description, :business_id, images_attributes: [:direct_upload_url])
    end
 
   def query_params
-    params.permit(:name, :price, :expires_at, :description, :business_id)
+    params.permit(:name, :price, :expires_at, :description, :business_id, :id)
   end
 
 end

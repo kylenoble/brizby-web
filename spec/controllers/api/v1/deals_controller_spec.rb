@@ -23,15 +23,19 @@ RSpec.describe Api::V1::DealsController, :type => :controller do
   # This should return the minimal set of attributes required to create a valid
   # Deal. As you add validations to Deal, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "business_id" => 
-                              "name" =>
-                              "price" =>
-                              "expires_at" =>
-                              "description" => } }
+  let(:valid_attributes) { { business_id: '1',
+                              name: 'testing',
+                              price: '4.99',
+                              expires_at: '1/25/2016',
+                              description: 'This is a hot deal' } }
 
-  let(:invalid_attributes) {
-    
-  }
+  let(:invalid_attributes) { {
+    business_id: '',
+    name: '',
+    price: '',
+    expires_at: 'test',
+    description: ''
+  } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -82,30 +86,30 @@ RSpec.describe Api::V1::DealsController, :type => :controller do
     describe "with valid params" do
       it "creates a new Deal" do
         expect {
-          post :create, {:deal => valid_attributes}
+          post :create, {:api_v1_deal => valid_attributes}
         }.to change(Deal, :count).by(1)
       end
 
       it "assigns a newly created deal as @deal" do
-        post :create, {:deal => valid_attributes}
+        post :create, {:api_v1_deal => valid_attributes}
         expect(assigns(:deal)).to be_a(Deal)
         expect(assigns(:deal)).to be_persisted
       end
 
       it "redirects to the created deal" do
-        post :create, {:deal => valid_attributes}
+        post :create, {:api_v1_deal => valid_attributes}
         expect(response).to redirect_to(Deal.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved deal as @deal" do
-        post :create, {:deal => invalid_attributes}
+        post :create, {:api_v1_deal => invalid_attributes}
         expect(assigns(:deal)).to be_a_new(Deal)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:deal => invalid_attributes}
+        post :create, {:api_v1_deal => invalid_attributes}
         expect(response).to render_template("new")
       end
     end

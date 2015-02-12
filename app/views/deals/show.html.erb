@@ -20,5 +20,20 @@
   <%= @deal.description %>
 </p>
 
+<% if @deal.images.exists? %>
+  <div class="row">
+    <div class="twelve columns">
+      <div class="image-row">
+          <div class="image-set">
+            <p><strong><u>Images:</u></strong></p>
+            <% @deal.images.each do |image| %>
+                <a class="without-caption image-link" data-lightbox="image-1" rel="shadowbox"><%= image_tag image.image.url(:thumbnail) %></a>
+            <% end %>  
+          </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <%= link_to 'Edit', edit_deal_path(@deal) %> |
 <%= link_to 'Back', deals_path %>

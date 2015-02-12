@@ -1,8 +1,11 @@
 class Deal < ActiveRecord::Base
 	include PublicActivity::Model
 
-	belongs_to :businesses
+	belongs_to :business
 	has_and_belongs_to_many :users
+	
+	has_many :images
+	accepts_nested_attributes_for :images, :allow_destroy => true
 
 	validates :business_id, presence: true
 	validates :name, presence: true

@@ -2,9 +2,11 @@ class ProfilePic < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :business 
 
-	BUCKET_NAME = Rails.application.secrets.aws['s3_bucket_name']
+	BUCKET_NAME = ENV["AWS_BUCKET"]
 
-  validates_attachment :image
+  has_attached_file :image
+
+  validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
   validates :direct_upload_url, presence: true
    
   before_validation :set_upload_attributes
@@ -22,9 +24,9 @@ class ProfilePic < ActiveRecord::Base
     direct_upload_url_data = URI.parse(profile_pic.direct_upload_url).path[9..-1].to_s
     s3 = AWS::S3.new
     
-    paperclip_file_path = "profile-pics/#{id}/original/#{direct_upload_url_data}"
-    s3.buckets[BUCKET_NAME].objects[paperclip_file_path].copy_from("#{direct_upload_url_data}")
+    profile_pic.image = URI.parse(URI.escape(profile_pic.direct_upload_url))    
 
+    profile_pic.image.reprocess!
     profile_pic.processed = true
     profile_pic.save
     

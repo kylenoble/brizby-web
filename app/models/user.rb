@@ -11,9 +11,19 @@ class User < ActiveRecord::Base
   	}, 
   	:presence => true
   
-  has_many :followships
-  has_many :user_follows, through: :followships
-  has_many :business_follows, through: :followships
+  has_many :active_followships,  class_name:  "Followship",
+                                   foreign_key: "user_id",
+                                   dependent:   :destroy
+  has_many :passive_followships, class_name:  "Followship",
+                                   foreign_key: "user_followed_id",
+                                   dependent:   :destroy
+  has_many :user_following, through: :active_followships,  source: :user_followed
+  has_many :business_following, through: :active_followships,  source: :business_followed
+  has_many :followers, through: :passive_followships, source: :user
+
+  def following
+    (user_following.all + business_following.all)
+  end
 
   has_and_belongs_to_many :deals
   has_one :profile_pic, :dependent => :destroy
