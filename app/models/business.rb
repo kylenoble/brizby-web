@@ -13,6 +13,12 @@ class Business < ActiveRecord::Base
                                    dependent:   :destroy
   has_many :followers, through: :passive_followships, source: :user                                
 
+  has_many :comments
+  has_many :commented_posts, through: :comments,
+           source: :commentable, source_type: 'Post'
+  has_many :commented_deals, through: :comments,
+          source: :commentable, source_type: 'Deal'
+
   has_many :deals
   has_one :avatar, as: :avatarable, :dependent => :destroy
 	accepts_nested_attributes_for :avatar, :allow_destroy => true

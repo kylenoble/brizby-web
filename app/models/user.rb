@@ -25,6 +25,12 @@ class User < ActiveRecord::Base
     (user_following.all + business_following.all)
   end
 
+  has_many :comments
+  has_many :commented_posts, through: :comments,
+           source: :commentable, source_type: 'Post'
+  has_many :commented_deals, through: :comments,
+          source: :commentable, source_type: 'Deal'
+
   has_and_belongs_to_many :deals
   has_one :avatar, as: :avatarable, :dependent => :destroy
   accepts_nested_attributes_for :avatar, :allow_destroy => true

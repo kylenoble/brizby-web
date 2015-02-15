@@ -5,6 +5,8 @@ class Deal < ActiveRecord::Base
 	has_and_belongs_to_many :users
 	
 	has_many :images, as: :imageable, dependent: :destroy
+	has_many :comments, as: :commentable, dependent: :destroy
+	
 	accepts_nested_attributes_for :images, :allow_destroy => true
 
 	validates :business_id, presence: true
