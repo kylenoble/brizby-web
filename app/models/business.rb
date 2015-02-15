@@ -14,6 +14,6 @@ class Business < ActiveRecord::Base
   has_many :followers, through: :passive_followships, source: :user                                
 
   has_many :deals
-  has_one :profile_pic, :dependent => :destroy
-	accepts_nested_attributes_for :profile_pic, :allow_destroy => true
+  has_one :avatar, as: :avatarable, :dependent => :destroy
+	accepts_nested_attributes_for :avatar, :allow_destroy => true
 end

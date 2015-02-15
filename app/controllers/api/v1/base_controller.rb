@@ -3,7 +3,7 @@ class Api::V1::BaseController < Api::BaseController
 
     # POST /api/{plural_resource_name}
     def create
-      set_resource(resource_class.new(resource_params))
+      @resource = set_resource(resource_class.new(resource_params))
 
       if get_resource.save
         if params.fetch(:api_v1_deal)[:business_id] 
@@ -60,10 +60,10 @@ class Api::V1::BaseController < Api::BaseController
 
         if class_name == Deal
           @deal = get_resource
-          @deal.create_activity :create, owner: @business
+          @deal.delay.create_activity :create, owner: @business
         elsif class_name == Post
           @post = get_resource
-          @deal.create_activity :create, owner: @business
+          @deal.delay.create_activity :create, owner: @business
         else
           puts "no activity"
         end

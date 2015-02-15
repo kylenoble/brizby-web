@@ -1,1 +1,1 @@
-json.(user, :id, :name, :profile_pic)
+json.(user, :id, :name, :avatar)

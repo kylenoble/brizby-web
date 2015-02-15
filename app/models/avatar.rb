@@ -1,6 +1,5 @@
-class ProfilePic < ActiveRecord::Base
-	belongs_to :user
-	belongs_to :business 
+class Avatar < ActiveRecord::Base
+  belongs_to :avatarable, polymorphic: true
 
 	BUCKET_NAME = ENV["AWS_BUCKET"]
 
@@ -23,22 +22,22 @@ class ProfilePic < ActiveRecord::Base
     self.attributes = params
     set_upload_attributes
     save!
-    ProfilePic.delay.finalize_and_cleanup(id)
+    Avatar.delay.finalize_and_cleanup(id)
   end
 
   # Final upload processing step
   def self.transfer_and_cleanup(id)
-    profile_pic = ProfilePic.find(id)
-    direct_upload_url_data = URI.parse(profile_pic.direct_upload_url).path[8..-1].to_s
+    avatar = Avatar.find(id)
+    direct_upload_url_data = URI.parse(avatar.direct_upload_url).path[8..-1].to_s
     s3 = AWS::S3.new
     
-    profile_pic.image = URI.parse(URI.escape(profile_pic.direct_upload_url))
-    paperclip_file_path = "profile_pics/#{id}/original/#{direct_upload_url_data}"
+    avatar.image = URI.parse(URI.escape(avatar.direct_upload_url))
+    paperclip_file_path = "avatars/#{id}/original/#{direct_upload_url_data}"
     s3.buckets[BUCKET_NAME].objects[paperclip_file_path].copy_from("#{direct_upload_url_data}")    
 
-    profile_pic.image.reprocess!
-    profile_pic.processed = true
-    profile_pic.save
+    avatar.image.reprocess!
+    avatar.processed = true
+    avatar.save
     
     #s3.buckets[BUCKET_NAME].objects[direct_upload_url_data].delete
   end
@@ -69,8 +68,9 @@ class ProfilePic < ActiveRecord::Base
   
   # Queue file processing
   def queue_finalize_and_cleanup
-    ProfilePic.delay.transfer_and_cleanup(id)
-    puts "queueing"
+    Avatar.delay.transfer_and_cleanup(id)
   end
  
 end
+
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150212031940) do
+ActiveRecord::Schema.define(version: 20150215040635) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,21 @@ ActiveRecord::Schema.define(version: 20150212031940) do
   add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
+
+  create_table "avatars", force: true do |t|
+    t.boolean  "processed",          default: false, null: false
+    t.string   "direct_upload_url",                  null: false
+    t.integer  "avatarable_id"
+    t.string   "avatarable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
+  add_index "avatars", ["avatarable_id", "avatarable_type"], name: "index_avatars_on_avatarable_id_and_avatarable_type", using: :btree
 
   create_table "businesses", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -121,22 +136,20 @@ ActiveRecord::Schema.define(version: 20150212031940) do
   add_index "followships", ["user_followed_id"], name: "index_followships_on_user_followed_id", using: :btree
 
   create_table "images", force: true do |t|
-    t.integer  "post_id"
-    t.integer  "deal_id"
+    t.boolean  "processed",          default: false, null: false
+    t.string   "direct_upload_url",                  null: false
     t.text     "caption"
+    t.integer  "imageable_id"
+    t.string   "imageable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.integer  "business_id"
-    t.string   "direct_upload_url",  null: false
-    t.boolean  "processed",          null: false
   end
 
-  add_index "images", ["business_id"], name: "index_images_on_business_id", using: :btree
-  add_index "images", ["deal_id"], name: "index_images_on_deal_id", using: :btree
-  add_index "images", ["post_id"], name: "index_images_on_post_id", using: :btree
-  add_index "images", ["processed"], name: "index_images_on_processed", using: :btree
+  add_index "images", ["imageable_id", "imageable_type"], name: "index_images_on_imageable_id_and_imageable_type", using: :btree
 
   create_table "posts", force: true do |t|
     t.text     "body"
@@ -146,23 +159,6 @@ ActiveRecord::Schema.define(version: 20150212031940) do
   end
 
   add_index "posts", ["business_id"], name: "index_posts_on_business_id", using: :btree
-
-  create_table "profile_pics", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "business_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.string   "direct_upload_url",                  null: false
-    t.boolean  "processed",          default: false, null: false
-  end
-
-  add_index "profile_pics", ["business_id"], name: "index_profile_pics_on_business_id", using: :btree
-  add_index "profile_pics", ["processed"], name: "index_profile_pics_on_processed", using: :btree
-  add_index "profile_pics", ["user_id"], name: "index_profile_pics_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
