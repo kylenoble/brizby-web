@@ -4,7 +4,7 @@ json.feed @activities do |activity|
   if activity.trackable_type == 'Deal'
     @deal = Deal.find(activity.trackable_id)
     @business = Business.find(activity.owner_id)
-    json.pics do 
+    json.images do 
       @deal.images.each do |image|
         json.status "images"
         json.image image.image.url(:med)
@@ -22,15 +22,30 @@ json.feed @activities do |activity|
     end
   elsif activity.trackable_type == 'Post'
     @post = Post.find(activity.trackable_id)
-    @business = Business.find(activity.owner_id)
+    json.images do 
+      @post.images.each do |image|
+        json.status "images"
+        json.image image.image.url(:med)
+      end
+    end
     json.post do
       json.cache! @post do
         json.partial! @post
       end
-    end 
-    json.business do
-      json.cache! @business do 
-        json.partial! @business
+    end
+    if @post.postable_type == "business" 
+      @business = Business.find(activity.owner_id)
+      json.business do
+        json.cache! @business do 
+          json.partial! @business
+        end
+      end
+    else
+      @user = User.find(activity.owner_id)
+      json.user do
+        json.cache! @user do 
+          json.partial! @user
+        end
       end
     end
   elsif activity.trackable_type == 'Followship'
