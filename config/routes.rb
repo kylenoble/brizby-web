@@ -24,7 +24,9 @@ Rails.application.routes.draw do
 			resources :businesses do
 				resources :avatars, only: [:create, :destroy]
 			end
-			resources :deals, :activities, :users, :followships, :posts
+			resources :deals, :activities, :users, :posts
+			resources :followships, only: [:create, :show, :index]
+		  delete 'followships/unfollow', :to => 'followships#destroy'
 		end
 	end
 	

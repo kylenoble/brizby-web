@@ -7,19 +7,29 @@ class Api::V1::FollowshipsController < Api::BaseController
 		else
 			@followship = @user.active_followships.create!(:user_followed_id => params["api_v1_followship"][:user_followed_id])
 		end	
-		render :json => {:state => {:code => 0}, :data => @followship }
+		if @followship.save 
+			render :json => {:state => {:code => 0}, :data => "Successfully Followed" }
+		else 
+			render :json => {:state => {:code => 1, :messages => @followship.errors.full_messages} }, status: 422
+		end
 	end 
 
 	def destroy
 
 		if params["api_v1_followship"][:business_followed_id]
-			@followship = @user.active_followships.business_followed_id.find(params["api_v1_followship"][:business_followed_id])
+			@followship = Followship.where(:user_id => @user, :business_followed_id => params["api_v1_followship"][:business_followed_id]).first
+			@followship.destroy
 		else
-			@followship = @user.active_followships.user_followed_id.find(params["api_v1_followship"][:user_followed_id])
+			@followship = Followship.where(:user_id => @user, :user_followed_id => params["api_v1_followship"][:business_followed_id]).first
+			@followship.destroy
 		end
 
-		@followship.destroy
-		render :json => {:state => {:code => 0}, :data => "unfollowed" }
+		if @followship.destroy 
+			render :json => {:state => {:code => 0}, :data => "unfollowed" }
+		else 
+			render :json => {:state => {:code => 1, :messages => @followship.errors.full_messages} }, status: 422
+		end
+
 	end
 
 	private

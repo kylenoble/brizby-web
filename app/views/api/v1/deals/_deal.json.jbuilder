@@ -1,1 +1,1 @@
-json.(deal, :id, :name, :description, :expires_at, :images)
+json.(deal, :id, :name, :description, :expires_at)

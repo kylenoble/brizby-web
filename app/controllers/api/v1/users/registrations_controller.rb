@@ -5,11 +5,9 @@ module V1
       puts "valid"
       @user.valid?
       if @user.save!
-        puts "saving"
         sign_in(@user)
         render :json => {:state => {:code => 0}, :data => @user }
       else
-        puts "no save"
         render :json => {:state => {:code => 1, :messages => @user.errors.full_messages} }, status: 422
       end
 
