@@ -6,10 +6,10 @@ class Api::V1::BaseController < Api::BaseController
       @resource = set_resource(resource_class.new(resource_params))
 
       if get_resource.save
-        if params.fetch(:api_v1_deal)[:business_id] 
-          add_activity(resource_class, params[:api_v1_deal][:business_id], "business")
-        elsif params.fetch(:api_v1_post)[:business_id] 
-          add_activity(resource_class, params[:api_v1_post][:business_id], "business")
+        if params.has_key?(:deal)
+          add_activity(resource_class, params.fetch(:deal)[:business_id], "business")
+        elsif params.has_key?(:post)
+          add_activity(resource_class, params.fetch(:post)[:postable_id], params.fetch(:post)[:postable_type])
         end
         render :show, status: :created
       else
@@ -63,7 +63,11 @@ class Api::V1::BaseController < Api::BaseController
           @deal.delay.create_activity :create, owner: @business
         elsif class_name == Post
           @post = get_resource
-          @deal.delay.create_activity :create, owner: @business
+          if @post.postable_type == "business"
+            @post.delay.create_activity :create, owner: @business
+          else
+            @post.delay.create_activity :create, owner: @user
+          end
         else
           puts "no activity"
         end

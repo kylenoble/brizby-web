@@ -1,10 +1,11 @@
 class CreatePosts < ActiveRecord::Migration
   def change
+    drop_table :posts
     create_table :posts do |t|
       t.text :body
-      t.belongs_to :business
+      t.references :postable, polymorphic: true, index: true
+
       t.timestamps
     end
-    add_index :posts, :business_id
   end
 end

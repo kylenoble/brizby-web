@@ -20,6 +20,7 @@ class Business < ActiveRecord::Base
           source: :commentable, source_type: 'Deal'
 
   has_many :deals
+  has_many :posts, as: :postable, dependent: :destroy
   has_one :avatar, as: :avatarable, :dependent => :destroy
 	accepts_nested_attributes_for :avatar, :allow_destroy => true
 end

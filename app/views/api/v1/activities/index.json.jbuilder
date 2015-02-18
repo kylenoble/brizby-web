@@ -4,7 +4,6 @@ json.feed @activities do |activity|
   if activity.trackable_type == 'Deal'
     @deal = Deal.find(activity.trackable_id)
     @business = Business.find(activity.owner_id)
-    json.namestuff "The name"
     json.pics do 
       @deal.images.each do |image|
         json.status "images"

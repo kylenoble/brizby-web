@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
   has_many :commented_deals, through: :comments,
           source: :commentable, source_type: 'Deal'
 
+  has_many :posts, as: :postable, dependent: :destroy
   has_and_belongs_to_many :deals
   has_one :avatar, as: :avatarable, :dependent => :destroy
   accepts_nested_attributes_for :avatar, :allow_destroy => true
