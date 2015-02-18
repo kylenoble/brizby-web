@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 		resources :avatars, only: [:create, :destroy]
 	end
 
-	namespace :api, path: '/', constraints: { subdomain: 'api' } do
+	namespace :api, path: '/', constraints: { subdomain: 'api' }, defaults: { format: :json } do
 		namespace :v1 do
 			devise_for :users, module: 'api/v1/users' 
 			resources :users do 
