@@ -2,9 +2,9 @@ class LoveController < ApplicationController
 	def create
 		@love = Love.new(love_params)
 		if @love.save 
-			render :json => {:state => {:code => 0}, :data => "Successfully Loved" }
+			respond_with("Loved")
 		else 
-			render :json => {:state => {:code => 1, :messages => @love.errors.full_messages} }, status: 422
+			respond_with(@love.errors.full_messages)
 		end
 	end 
 
@@ -12,9 +12,9 @@ class LoveController < ApplicationController
 		@love = Love.where("loveable_id = ? && user_id = ?", params[:loveable_id], params[:user_id])
 
 		if @love.destroy
-			render :json => {:state => {:code => 0}, :data => "Successfully UnLoved" }
+			respond_with("UnLoved")
 		else 
-			render :json => {:state => {:code => 1, :messages => @love.errors.full_messages} }, status: 422
+			respond_with(@love.errors.full_messages)
 		end
 	end
 

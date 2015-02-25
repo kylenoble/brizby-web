@@ -5,6 +5,7 @@ class FollowshipController < ApplicationController
 		else
 			@followship = current_user.followships.create!(:user_followed_id => params[:user_followed_id])
 		end	
+		respond_with("Followed")
 	end 
 
 	def destroy
@@ -16,6 +17,7 @@ class FollowshipController < ApplicationController
 		end
 
 		@followship.destroy
+		respond_with("UnFollowed")
 	end
 
 	private
