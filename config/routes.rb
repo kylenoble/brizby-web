@@ -3,7 +3,12 @@ Rails.application.routes.draw do
 
   get 'activities/index'
 
-  resources :comments,  :deals, :activities, :followships, :posts
+  resources :comments,  :deals, :activities, :posts
+  resources :followships, only: [:create, :show, :index]
+	delete 'followships/unfollow', :to => 'followships#destroy'
+
+	resources :loves, only: [:create, :show, :index]
+	delete 'loves/unlove', :to => 'loves#destroy'
 
 	devise_for :users
 	devise_for :businesses
@@ -25,8 +30,12 @@ Rails.application.routes.draw do
 				resources :avatars, only: [:create, :destroy]
 			end
 			resources :deals, :activities, :users, :posts
+			
 			resources :followships, only: [:create, :show, :index]
 		  delete 'followships/unfollow', :to => 'followships#destroy'
+
+		  resources :loves, only: [:create, :show, :index]
+			delete 'loves/unlove', :to => 'loves#destroy'
 		end
 	end
 	

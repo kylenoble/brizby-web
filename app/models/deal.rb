@@ -6,6 +6,7 @@ class Deal < ActiveRecord::Base
 	
 	has_many :images, as: :imageable, dependent: :destroy
 	has_many :comments, as: :commentable, dependent: :destroy
+	has_many :loves, as: :loveable, dependent: :destroy
 	
 	accepts_nested_attributes_for :images, :allow_destroy => true
 

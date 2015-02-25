@@ -5,5 +5,7 @@ class Post < ActiveRecord::Base
 	has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :postable, polymorphic: true
 
+  has_many :loves, as: :loveable, dependent: :destroy
+
   accepts_nested_attributes_for :images, :allow_destroy => true
 end

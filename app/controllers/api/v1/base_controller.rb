@@ -11,6 +11,7 @@ class Api::V1::BaseController < Api::BaseController
         elsif params.has_key?(:post)
           add_activity(resource_class, params.fetch(:post)[:postable_id], params.fetch(:post)[:postable_type])
         end
+        
         render :show, status: :created
       else
         render json: get_resource.errors, status: :unprocessable_entity

@@ -1,5 +1,8 @@
 class Image < ActiveRecord::Base
   belongs_to :imageable, polymorphic: true
+
+  has_many :loves, as: :loveable, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
  
   BUCKET_NAME = ENV["AWS_BUCKET"]
 
