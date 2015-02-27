@@ -17,12 +17,17 @@ class FollowshipController < ApplicationController
 		end
 
 		@followship.destroy
-		respond_with("UnFollowed")
+
+		if @followship.destroyed?
+			respond_with("Unfollowed")
+		else
+			respond_with(@followship.errors.full_messages)
+		end
 	end
 
 	private
 
 	def followship_params
-		params.permit(:user_id, :user_followed_id, :business_followed_id)
+		params.require(:followship).permit(:user_id, :user_followed_id, :business_followed_id)
 	end
 end

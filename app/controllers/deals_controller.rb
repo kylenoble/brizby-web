@@ -11,6 +11,7 @@ class DealsController < ApplicationController
   end
 
   def show
+    @comments = @deal.comments.all.order("created_at desc")
     respond_with(@deal)
   end
 

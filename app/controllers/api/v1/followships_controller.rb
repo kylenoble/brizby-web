@@ -18,13 +18,13 @@ class Api::V1::FollowshipsController < Api::BaseController
 
 		if params["api_v1_followship"][:business_followed_id]
 			@followship = Followship.where(:user_id => @user, :business_followed_id => params["api_v1_followship"][:business_followed_id]).first
-			@followship.destroy
 		else
 			@followship = Followship.where(:user_id => @user, :user_followed_id => params["api_v1_followship"][:business_followed_id]).first
-			@followship.destroy
 		end
 
-		if @followship.destroy 
+		@followship.destroy
+		
+		if @followship.destroyed?
 			render :json => {:state => {:code => 0}, :data => "unfollowed" }
 		else 
 			render :json => {:state => {:code => 1, :messages => @followship.errors.full_messages} }, status: 422

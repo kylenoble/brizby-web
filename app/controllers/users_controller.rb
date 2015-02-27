@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   end
 
 	def show
+		@activities = Activity.where("owner_id = ?", @user.id).order("created_at desc")
 		@user = User.find(params[:id])
 		render json: @user.profile_pic.image 
 	end
