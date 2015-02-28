@@ -14,6 +14,9 @@ body {
 	color: $white; 
 	font-weight: $bold;
 	font-size: 18px;
+	@media(min-width: 748px) {
+		font-size: 16px;
+	}
 }
 
 .nav-item {
@@ -39,3 +42,10 @@ body {
 	background-color: $brizby_orange;
 	min-width: 165px;
 }
+
+.header-logo {
+	width: $header-height + 25;
+	margin-top: -15px;
+}
+
+
