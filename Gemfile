@@ -31,8 +31,8 @@ gem 'public_activity'
 gem 'jbuilder'
 gem 'kaminari'
 gem 'responders'
-gem 'nokogiri'
-gem 'bootstrap-sass'
+gem  'nokogiri'
+gem 'bootstrap-sass', '~> 3.3.2'
 
 group :development do
   gem "bundler-audit"

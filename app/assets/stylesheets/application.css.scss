@@ -5,5 +5,13 @@
 @import 'base/grid-settings';
 @import 'neat';
 @import 'base/base';
+<<<<<<< HEAD
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+=======
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "_colors";
+@import "_variables";
+@import "header";
+>>>>>>> c0a7ff84df408546a266997111b050d95c5155e2
