@@ -10,8 +10,8 @@ Rails.application.routes.draw do
 	resources :loves, only: [:create, :show, :index]
 	delete 'loves/unlove', :to => 'loves#destroy'
 
-	devise_for :users
-	devise_for :businesses
+	devise_for :users, module: 'users'
+	devise_for :businesses, module: 'businesses'
 	resources :businesses do
 		resources :avatars, only: [:create, :destroy]
 	end

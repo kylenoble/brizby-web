@@ -3,7 +3,6 @@ source "https://rubygems.org"
 ruby "2.1.5"
 
 gem "aws-sdk" 
-gem "bourbon", "~> 3.2.1"
 gem "coffee-rails"
 gem "delayed_job_active_record"
 gem "email_validator"
@@ -18,7 +17,7 @@ gem "pg"
 gem "rack-timeout"
 gem "rails", "4.1.8"
 gem "recipient_interceptor"
-gem "sass-rails", "~> 4.0.3"
+gem "sass-rails"
 gem "title"
 gem "uglifier"
 gem "unicorn"
@@ -32,7 +31,8 @@ gem 'public_activity'
 gem 'jbuilder'
 gem 'kaminari'
 gem 'responders'
-gem  'nokogiri'
+gem 'nokogiri'
+gem 'bootstrap-sass'
 
 group :development do
   gem "bundler-audit"
