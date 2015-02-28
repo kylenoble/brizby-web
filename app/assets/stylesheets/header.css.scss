@@ -1,0 +1,51 @@
+body { 
+	padding-top: 70px; 
+}
+
+.navbar-default {
+	background-color: $brizby_orange;
+}
+
+.navbar-default .navbar-nav > .active > a {
+	background-color: $white;
+}
+
+.navbar-default .navbar-nav > li > a {
+	color: $white; 
+	font-weight: $bold;
+	font-size: 18px;
+	@media(min-width: 748px) {
+		font-size: 16px;
+	}
+}
+
+.nav-item {
+	border-left: 1px solid $white;
+}
+
+.last-nav-item {
+	border-left: 1px solid $white;
+	border-right: 1px solid $white;
+}
+
+.nav-user-icon {
+	padding: 3px;
+	border: 1px solid $white;
+}
+
+.navbar-nav > li > a.user-dropdown {
+	padding-top: 11px;
+	padding-bottom: 11px;
+}
+
+.dropdown-menu {
+	background-color: $brizby_orange;
+	min-width: 165px;
+}
+
+.header-logo {
+	width: $header-height + 25;
+	margin-top: -15px;
+}
+
+
