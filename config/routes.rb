@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :posts
 
   get 'activities/index'
+  get 'feed' => 'feed#index'
 
   resources :comments,  :deals, :activities, :posts
   resources :followships, only: [:create, :show, :index]

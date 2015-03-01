@@ -1,0 +1,35 @@
+.login-panel {
+	width: $login-panel-width;
+	@media (max-width: 550px) {
+		width: $login-panel-small;
+	}
+	input{
+		margin-top: 20px;
+	}
+	.login-form {
+		padding: 20px;
+		input[type="submit"].login-button {
+			width: 250px;
+			background-color: $brizby_orange;
+			margin-left: (($login-panel-width - 325px)/2);
+			margin-right: (($login-panel-width - 325px)/2);
+			@media (max-width: 550px) {
+				width: 150px;
+				margin-left: (($login-panel-small - 225px)/2);
+				margin-right: (($login-panel-small - 225px)/2);
+			}
+		}
+	}
+	.login-logo {
+		min-width: $login-logo-width;
+		margin: 15px (($login-panel-width - $login-logo-width - 30px)/2);
+		@media (max-width: 550px) {
+			margin: 15px (($login-panel-small - $login-logo-width - 30px)/2);
+		}
+	}
+	.login-lower-section {
+		margin-top: -2px;
+		padding: 20px;
+	}
+}
+

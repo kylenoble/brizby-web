@@ -36,15 +36,16 @@ body {
 .navbar-nav > li > a.user-dropdown {
 	padding-top: 11px;
 	padding-bottom: 11px;
+	min-width: 150px;
 }
 
 .dropdown-menu {
 	background-color: $brizby_orange;
-	min-width: 165px;
+	min-width: 150px;
 }
 
 .header-logo {
-	width: $header-height + 25;
+	width: $header-height + $header-hangover;
 	margin-top: -15px;
 }
 
