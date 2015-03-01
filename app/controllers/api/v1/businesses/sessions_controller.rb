@@ -21,8 +21,8 @@ module V1
     end
 
     def destroy
-      if business_signed_in?
-        @business = current_business
+      if api_v1_business_signed_in?
+        @business = current_api_v1_business
         @business.authentication_token = nil
         @business.save
         sign_out(@business)

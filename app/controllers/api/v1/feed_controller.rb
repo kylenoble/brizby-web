@@ -1,9 +1,9 @@
-class FeedController < ApplicationController
+class Api::V1::FeedController < Api::V1::BaseController
   before_filter :authenticate_user!
 
   def index
-  	if user_signed_in?
-  		@user = current_user
+  	if api_v1_user_signed_in?
+  		@user = current_api_v1_user
   		@follow_activities = Activity.where("owner_id = ?", @user.following).order("created_at desc")
   		@global_activities = Activity.all.order("created_at desc")
 			@local_activities = local_activities_query

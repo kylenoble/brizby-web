@@ -20,8 +20,8 @@ module V1
     end
 
     def destroy
-      if user_signed_in?
-        @user = current_user
+      if api_v1_user_signed_in?
+        @user = current_api_v1_user
         @user.authentication_token = nil
         @user.save
         sign_out(@user)

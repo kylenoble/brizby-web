@@ -1,0 +1,6 @@
+activities = Arel::Table.new(:activities)
+biz = activities[:owner_id].in(local_businesses).and(activities[:owner_type].eq('Business'))
+user  = activities[:owner_id].in(local_users).and(activities[:owner_type].eq('User'))
+
+local_activities = activities.where(biz.or(user)).order(activities[:created_at].desc)
+local_activities.to_sql
