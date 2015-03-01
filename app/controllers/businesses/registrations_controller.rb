@@ -5,9 +5,9 @@ class Businesses::RegistrationsController < Devise::RegistrationsController
     @business = Business.create(business_params) { |q| q.full_address = @business_address }
     if @business.save
       sign_in(@business)
-      render @business
+      respond_with(@business)
     else
-      render @business.errors.full_messages
+      respond_with(@business.errors.full_messages)
     end
   end
   

@@ -11,11 +11,7 @@ class Users::SessionsController < Devise::SessionsController
     warden.authenticate!(:scope => resource_name)
     @user = current_api_v1_user
     
-    render json: {
-      message:    'Logged in',
-      auth_token: @user.authentication_token,
-      email: @user.email
-    }, status: :ok
+    respond_with(@user)
   end
 
   def destroy
@@ -24,21 +20,10 @@ class Users::SessionsController < Devise::SessionsController
       @user.authentication_token = nil
       @user.save
 
-      respond_to do |format|
-        format.json {
-          render json: {
-            message: 'Logged out successfully.'
-          }, status: :ok
-        }
-      end
+      render 'businesses/sign_in'
+      
     else
-      respond_to do |format|
-        format.json {
-          render json: {
-            message: 'Failed to log out. User must be logged in.'
-          }, status: :ok
-        }
-      end
+      render 'Error. Unable to logout. Please make sure you are logged in.'
     end
   end
 

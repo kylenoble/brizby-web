@@ -11,7 +11,7 @@ class Businesses::SessionsController < Devise::SessionsController
     warden.authenticate!(:scope => resource_name)
     @business = current_business
 
-    render @business
+    respond_with(@business)
   end
 
   def destroy
@@ -28,8 +28,6 @@ class Businesses::SessionsController < Devise::SessionsController
         }
       end
     else
-      logger.info "business #{current_business}"
-      puts business_signed_in?
       respond_to do |format|
         format.json {
           render json: {

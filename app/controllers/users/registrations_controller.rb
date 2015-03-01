@@ -1,15 +1,12 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   def create
     @user = User.create(user_params)
-    puts "valid"
     @user.valid?
     if @user.save!
-      puts "saving"
       sign_in(@user)
-      render :json => {:state => {:code => 0}, :data => @user }
+      respond_with(@user)
     else
-      puts "no save"
-      render :json => {:state => {:code => 1, :messages => @user.errors.full_messages} }, status: 422
+      respond_with(@user.errors.full_messages)
     end
 
   end
