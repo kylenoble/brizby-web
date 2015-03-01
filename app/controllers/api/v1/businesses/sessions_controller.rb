@@ -9,8 +9,8 @@ module V1
     before_filter :authenticate_business!, :only => :destroy
 
     def create
-      @business = warden.authenticate!(auth_options)
-      sign_in(@business)
+      warden.authenticate!(:scope => resource_name)
+      @business = current_api_v1_business
 
       render json: {
         message:    'Logged in',

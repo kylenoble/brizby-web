@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 				resources :avatars, only: [:create, :destroy]
 			end
 			resources :deals, :activities, :users, :posts
-			
+			get 'feed' => 'feed#index'
 			resources :followships, only: [:create, :show, :index]
 		  delete 'followships/unfollow', :to => 'followships#destroy'
 

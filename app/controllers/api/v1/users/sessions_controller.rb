@@ -9,8 +9,8 @@ module V1
     before_filter :authenticate_user!, :only => :destroy
 
     def create
-      @user = warden.authenticate!(auth_options)
-      sign_in(@user)
+      warden.authenticate!(:scope => resource_name)
+      @user = current_api_v1_user
       
       render json: {
         message:    'Logged in',
