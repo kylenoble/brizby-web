@@ -9,8 +9,8 @@ module V1
     before_filter :authenticate_business!, :only => :destroy
 
     def create
-      warden.authenticate!(:scope => resource_name)
-      @business = current_api_v1_business
+      @business = warden.authenticate!(auth_options)
+      sign_in(@business)
 
       render json: {
         message:    'Logged in',
@@ -25,6 +25,7 @@ module V1
         @business = current_business
         @business.authentication_token = nil
         @business.save
+        sign_out(@business)
 
         respond_to do |format|
           format.json {

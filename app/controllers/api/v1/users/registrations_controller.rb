@@ -2,7 +2,6 @@ module V1
   class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
     def create
       @user = User.create(user_params)
-      puts "valid"
       @user.valid?
       if @user.save!
         sign_in(@user)
@@ -16,11 +15,11 @@ module V1
     private
 
     def query_params
-      params.permit(:email, :password, :username, :order)
+      params.permit(:email, :password, :name, :order)
     end
 
     def user_params
-      params.require(:api_v1_user).permit(:email, :password, :username, profile_pic_attributes: [:direct_upload_url])
+      params.require(:api_v1_user).permit(:email, :password, :name, :home_city, profile_pic_attributes: [:direct_upload_url])
     end
   end
 end
