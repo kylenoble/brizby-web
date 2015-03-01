@@ -1,31 +1,102 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+      <h2>Sign up</h2>
+    </div>
   </div>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= devise_error_messages! %>
+    
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="field">
+          <%= f.label :name %>
+          <%= f.text_field :name %>
+        </div>
+      </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @validatable %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+      <div class="col-md-4 col-md-offset-4">
+        <div class="field">
+          <%= f.label :email %>
+          <%= f.email_field :email, autofocus: true %>
+        </div>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :profile_pic %>
-    <%= f.fields_for :profile_pic_attributes do |pic| %>
-      <%= pic.file_field :image %>
-    <% end %>
-  </div>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="field">
+          <%= f.label :password %>
+          <% if @validatable %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <% end %><br />
+          <%= f.password_field :password, autocomplete: "off" %>
+        </div>
+      </div>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="field">
+          <%= f.label :phone_number %>
+          <%= f.telephone_field :phone_number %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="field">
+          <%= f.label :full_address %>
+          <%= f.fields_for :full_address do |a| %>
+             <div class="row">
+               <div class="col-md-12">
+                 <%= a.label :street %>
+                 <%= a.text_field :street %>
+               </div>
+               <div class="col-md-12">
+                 <%= a.label :city %>
+                 <%= a.text_field :city %>
+               </div>
+             </div>
+             <div class="row">
+               <div class="col-md-12">
+                 <%= a.label :state %>
+                 <%= a.text_field :state %>
+               </div>
+             </div>
+         <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="field">
+          <%= f.label :about %>
+          <%= f.text_field :about %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="field">
+          <%= f.label :profile_pic %>
+          <%= f.fields_for :profile_pic_attributes do |pic| %>
+            <%= pic.file_field :image %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="actions">
+          <%= f.submit "Sign up" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
 
 <%= render "businesses/shared/links" %>

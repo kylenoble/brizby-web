@@ -1,17 +1,31 @@
 class Businesses::RegistrationsController < Devise::RegistrationsController
+
   def create
-    @business = Business.create(business_params)
+    merge_address
+    @business = Business.create(business_params) { |q| q.full_address = @business_address }
     if @business.save
       sign_in(@business)
-      render :json => {:state => {:code => 0}, :data => @business }
+      render @business
     else
-      render :json => {:state => {:code => 1, :messages => @business.errors.full_messages} }, status: 422
+      render @business.errors.full_messages
     end
   end
   
   private
 
   def business_params
-    params.require(:api_v1_business).permit(:email, :password, profile_pic_attributes: [:image])
+    params.require(:business).permit(:email, :password, :name, :about, :phone_number, full_address: [:street, :city, :state])
+  end
+
+  def merge_address
+    @business_address = ""
+    business_params[:full_address].each do |key, val| 
+      if key == "state"
+        val = val + " "
+      else
+        val = val + ", "
+      end
+      @business_address += val
+    end
   end
 end

@@ -287,7 +287,6 @@ DEPENDENCIES
   awesome_print
   aws-sdk
   bootstrap-sass (~> 3.3.2)
-  bourbon (~> 3.2.1)
   bundler-audit
   byebug
   capybara-webkit
@@ -324,7 +323,7 @@ DEPENDENCIES
   recipient_interceptor
   responders
   rspec-rails
-  sass-rails (~> 4.0.3)
+  sass-rails
   shoulda-callback-matchers
   shoulda-matchers
   simple_token_authentication

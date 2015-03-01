@@ -1,5 +1,5 @@
 class Businesses::SessionsController < Devise::SessionsController
-  respond_to :json
+  respond_to :html
   skip_before_filter :verify_authenticity_token, if: :json_request?
 
   skip_before_filter :authenticate_entity_from_token!
@@ -9,14 +9,9 @@ class Businesses::SessionsController < Devise::SessionsController
 
   def create
     warden.authenticate!(:scope => resource_name)
-    @business = current_api_v1_business
+    @business = current_business
 
-    render json: {
-      message:    'Logged in',
-      auth_token: @business.authentication_token,
-      email: @business.email,
-      profile_pic: @business.profile_pic.image
-    }, status: :ok
+    render @business
   end
 
   def destroy
