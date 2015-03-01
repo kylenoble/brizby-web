@@ -3,8 +3,8 @@
   <div class="orange-outline login-form">
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="field">
-        <!-- <%= f.label :username %><br /> -->
-        <%= f.text_field :username, autofocus: true, placeholder: "Username" %>
+        <!-- <%= f.label :email %><br /> -->
+        <%= f.text_field :email, autofocus: true, placeholder: "Email" %>
       </div>
 
       <div class="field">

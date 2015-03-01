@@ -1,5 +1,14 @@
+<div class="container">
 <h1> Feed Page </h1>
-<%= @user.id %><br/>
-<%= @user.username %><br/>
-<%= @user.email %><br/>
-<%= @user.sign_in_count %>
+<% @activities.each do |activity| %>
+	<div class="row">
+		<% if activity.trackable_type == "Deal" %>
+			<% @business = Business.find(activity.owner_id) %>
+			<% @deal = Deal.find(activity.trackable_id) %>
+			<div class="col-md-5">
+				<p><%= link_to @business.name, @business %> added a deal: <%= link_to @deal.name, @deal %></p>
+			</div>
+		<% end %>
+	</div>
+<% end %>
+</div>

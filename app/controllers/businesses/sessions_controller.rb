@@ -8,10 +8,9 @@ class Businesses::SessionsController < Devise::SessionsController
   before_filter :authenticate_business!, :only => :destroy
 
   def create
-    warden.authenticate!(:scope => resource_name)
-    @business = current_business
-
-    respond_with(@business)
+    @business = warden.authenticate!(auth_options)
+    sign_in(@business)
+    respond_with @business, :location => after_sign_in_path_for(@business)
   end
 
   def destroy
@@ -20,21 +19,9 @@ class Businesses::SessionsController < Devise::SessionsController
       @business.authentication_token = nil
       @business.save
 
-      respond_to do |format|
-        format.json {
-          render json: {
-            message: 'Logged out successfully.'
-          }, status: :ok
-        }
-      end
+      render 'businesses/sign_in'
     else
-      respond_to do |format|
-        format.json {
-          render json: {
-            message: 'Failed to log out. Business must be logged in.'
-          }, status: :ok
-        }
-      end
+      render 'Error. Unable to logout. Please make sure you are logged in.'
     end
   end
 

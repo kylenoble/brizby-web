@@ -1,16 +1,15 @@
 class UsersController < ApplicationController
-  respond_to :json
+  respond_to :html
   #before_filter :authenticate_user!
 
   def index
     @users = User.all
-    render json: @users
+    respond_with(@users)
   end
 
   def show
-	@activities = Activity.where("owner_id = ?", @user.id).order("created_at desc")
-	@user = User.find(params[:id])
-	render json: @user.profile_pic.image 
+    @user = User.find(params[:id])
+    respond_with(@user)
   end
 
   private
@@ -20,6 +19,6 @@ class UsersController < ApplicationController
     end
 
 	def user_params
-  	  params.require(:api_v1_user).permit(:id, :username)
+  	  params.require(:user).permit(:id, :name)
 	end
 end
