@@ -22,7 +22,13 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    @post.save
+    if @post.save
+      if @post.postable_type == "business"
+        @post.delay.create_activity :create, owner: @business, latitude: @business.latitude, longitude: @business.longitude
+      else
+        @post.delay.create_activity :create, owner: @user, latitude: params.fetch(:post)[:latitude], longitude: params.fetch(:post)[:longitude]
+      end
+    end
     respond_with(@post)
   end
 
@@ -42,6 +48,6 @@ class PostsController < ApplicationController
     end
 
     def post_params
-      params.require(:post).permit(:body, :postable_id, :postable_type)
+      params.require(:post).permit(:body, :postable_type, :postable_id, :latitude, :longitude, images_attributes: [:direct_upload_url])
     end
 end

@@ -34,18 +34,6 @@ class Api::V1::FeedController < Api::V1::BaseController
   		params.permit(:lat, :lon, :distance, :page, :page_size, :type)
   	end
 
-  	def local_businesses
-  		businesses = []
-  		Business.near([feed_params[:lat], feed_params[:lon]], feed_params[:distance]).map {|business| businesses.push(business.id)}
-  		return businesses
-  	end
-
-  	def local_users
-  		users = []
-  		#User.near([feed_params[:lat], feed_params[:lon]], feed_params[:distance]).map {|user| users.push(user.id)}
-  		return users
-  	end
-
   	def following_activities_query(user)
   		return Activity.where("owner_id = ?", user.following)
 						.order("created_at desc")
@@ -61,12 +49,9 @@ class Api::V1::FeedController < Api::V1::BaseController
   	end
 
   	def local_activities_query
-  		activities = Arel::Table.new(:activities)
-			biz = activities[:owner_id].in(local_businesses).and(activities[:owner_type].eq('Business'))
-			user  = activities[:owner_id].in(local_users).and(activities[:owner_type].eq('User'))
-			return Activity.where(biz.or(user))
-						.order("created_at desc")
-						.page(feed_params[:page])
-            .per(feed_params[:page_size])
+			return Activity.near([feed_params[:lat], feed_params[:lon]], feed_params[:distance])
+							.order("created_at desc")
+							.page(feed_params[:page])
+				      .per(feed_params[:page_size])
 		end
 end

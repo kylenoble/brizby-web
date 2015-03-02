@@ -52,6 +52,10 @@ class Api::V1::BaseController < Api::BaseController
 
     private
 
+      def json_request?
+        request.format.json?
+      end
+
       def add_activity(class_name, user, type)
         if type == "business"
           @business = Business.find(user)
@@ -61,13 +65,13 @@ class Api::V1::BaseController < Api::BaseController
 
         if class_name == Deal
           @deal = get_resource
-          @deal.delay.create_activity :create, owner: @business
+          @deal.delay.create_activity :create, owner: @business, latitude: @business.latitude, longitude: @business.longitude
         elsif class_name == Post
           @post = get_resource
           if @post.postable_type == "business"
-            @post.delay.create_activity :create, owner: @business
+            @post.delay.create_activity :create, owner: @business, latitude: @business.latitude, longitude: @business.longitude
           else
-            @post.delay.create_activity :create, owner: @user
+            @post.delay.create_activity :create, owner: @user, latitude: params.fetch(:post)[:latitude], longitude: params.fetch(:post)[:longitude]
           end
         else
           puts "no activity"
