@@ -65,11 +65,11 @@ class Api::V1::BaseController < Api::BaseController
 
         if class_name == Deal
           @deal = get_resource
-          @deal.delay.create_activity :create, owner: @business, latitude: @business.latitude, longitude: @business.longitude
+          @deal.delay.create_activity :create, owner: @business, latitude: @business.latitude, longitude: @business.longitude, category: @business.category
         elsif class_name == Post
           @post = get_resource
           if @post.postable_type == "business"
-            @post.delay.create_activity :create, owner: @business, latitude: @business.latitude, longitude: @business.longitude
+            @post.delay.create_activity :create, owner: @business, latitude: @business.latitude, longitude: @business.longitude, category: @business.category
           else
             @post.delay.create_activity :create, owner: @user, latitude: params.fetch(:post)[:latitude], longitude: params.fetch(:post)[:longitude]
           end

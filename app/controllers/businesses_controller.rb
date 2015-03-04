@@ -26,6 +26,6 @@ class BusinessesController < ApplicationController
     end
 
     def business_params
-      params.require(:business).permit(:name, :full_address, :about, :phone_number, :latitude, :longitude)
+      params.require(:business).permit(:name, :full_address, :about, :category, :phone_number, :latitude, :longitude)
     end
 end

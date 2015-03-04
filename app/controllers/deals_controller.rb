@@ -29,7 +29,7 @@ class DealsController < ApplicationController
     @deal.business_id = @business.id
 
     if @deal.save
-      @deal.create_activity :create, owner: @business, latitude: @business.latitude, longitude: @business.longitude
+      @deal.create_activity :create, owner: @business, latitude: @business.latitude, longitude: @business.longitude, category: @business.category
     end
     respond_with(@deal)
   end

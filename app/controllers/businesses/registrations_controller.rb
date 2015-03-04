@@ -14,7 +14,7 @@ class Businesses::RegistrationsController < Devise::RegistrationsController
   private
 
   def business_params
-    params.require(:business).permit(:email, :password, :name, :about, :phone_number, full_address: [:street, :city, :state])
+    params.require(:business).permit(:email, :password, :name, :about, :category, :phone_number, full_address: [:street, :city, :state])
   end
 
   def merge_address

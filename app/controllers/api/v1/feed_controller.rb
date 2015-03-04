@@ -31,18 +31,18 @@ class Api::V1::FeedController < Api::V1::BaseController
 	  end
 
   	def feed_params
-  		params.permit(:lat, :lon, :distance, :page, :page_size, :type)
+  		params.permit(:lat, :lon, :distance, :page, :page_size, :type, :category)
   	end
 
   	def following_activities_query(user)
-  		return Activity.where("owner_id = ?", user.following)
+  		return Activity.where("owner_id = ? AND category = ? OR category = 'global'", @user.following, feed_params[:category])
 						.order("created_at desc")
 				    .page(feed_params[:page])
 				    .per(feed_params[:page_size])
   	end
 
   	def global_activities_query
-  		return Activity.all
+  		return Activity.where("category = ? OR category = 'global'", feed_params[:category])
 						.order("created_at desc")
 						.page(feed_params[:page])
             .per(feed_params[:page_size])
@@ -50,6 +50,7 @@ class Api::V1::FeedController < Api::V1::BaseController
 
   	def local_activities_query
 			return Activity.near([feed_params[:lat], feed_params[:lon]], feed_params[:distance])
+              .where("category = ? OR category = 'global'", feed_params[:category])
 							.order("created_at desc")
 							.page(feed_params[:page])
 				      .per(feed_params[:page_size])

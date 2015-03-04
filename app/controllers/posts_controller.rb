@@ -24,7 +24,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     if @post.save
       if @post.postable_type == "business"
-        @post.delay.create_activity :create, owner: @business, latitude: @business.latitude, longitude: @business.longitude
+        @post.delay.create_activity :create, owner: @business, latitude: @business.latitude, longitude: @business.longitude, category: @business.category
       else
         @post.delay.create_activity :create, owner: @user, latitude: params.fetch(:post)[:latitude], longitude: params.fetch(:post)[:longitude]
       end

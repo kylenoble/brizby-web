@@ -7,6 +7,8 @@ class Business < ActiveRecord::Base
 
   geocoded_by :full_address
   after_validation :geocode, if: ->(obj){ obj.full_address.present? and obj.full_address_changed? }
+
+  before_save { |business| business.category = business.category.downcase }
   
   has_many :passive_followships, class_name:  "Followship",
                                    foreign_key: "business_followed_id",
