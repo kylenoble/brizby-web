@@ -19,7 +19,7 @@ module V1
     end
 
     def user_params
-      params.require(:api_v1_user).permit(:email, :password, :name, :home_city, profile_pic_attributes: [:direct_upload_url])
+      params.require(:api_v1_user).permit(:email, :password, :name, :home_city, avatar_attributes: [:direct_upload_url])
     end
   end
 end

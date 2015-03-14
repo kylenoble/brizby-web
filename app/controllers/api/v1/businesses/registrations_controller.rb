@@ -13,7 +13,7 @@ module V1
     private
 
     def business_params
-      params.require(:api_v1_business).permit(:email, :password, :category, profile_pic_attributes: [:image])
+      params.require(:api_v1_business).permit(:email, :password, :category, avatar_attributes: [:direct_upload_url])
     end
   end
 end

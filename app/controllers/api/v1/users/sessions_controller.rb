@@ -15,7 +15,9 @@ module V1
       render json: {
         message:    'Logged in',
         auth_token: @user.authentication_token,
-        email: @user.email
+        email: @user.email,
+        profile_pic: @user.avatar.image,
+        id: @user.id
       }, status: :ok
     end
 

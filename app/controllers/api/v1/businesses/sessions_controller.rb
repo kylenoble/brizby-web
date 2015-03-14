@@ -16,7 +16,8 @@ module V1
         message:    'Logged in',
         auth_token: @business.authentication_token,
         email: @business.email,
-        profile_pic: @business.profile_pic.image
+        profile_pic: @business.avatar.image,
+        id: @business.id
       }, status: :ok
     end
 

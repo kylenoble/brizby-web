@@ -14,6 +14,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :username, profile_pic_attributes: [:direct_upload_url])
+    params.require(:user).permit(:email, :password, :username, avatar_attributes: [:direct_upload_url])
   end
 end
