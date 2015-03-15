@@ -16,7 +16,6 @@ module V1
         message:    'Logged in',
         auth_token: @user.authentication_token,
         email: @user.email,
-        profile_pic: @user.avatar.image,
         id: @user.id
       }, status: :ok
     end

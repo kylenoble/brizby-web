@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150315014557) do
+ActiveRecord::Schema.define(version: 20150315163226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20150315014557) do
 
   create_table "avatars", force: true do |t|
     t.boolean  "processed",          default: false, null: false
-    t.string   "direct_upload_url",                  null: false
+    t.string   "direct_upload_url"
     t.integer  "avatarable_id"
     t.string   "avatarable_type"
     t.datetime "created_at"

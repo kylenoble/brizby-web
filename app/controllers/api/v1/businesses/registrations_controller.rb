@@ -2,7 +2,7 @@ module V1
   class Api::V1::Businesses::RegistrationsController < Devise::RegistrationsController
     def create
       @business = Business.create(business_params)
-      if @business.save
+      if @business.valid? && @business.save!
         sign_in(@business)
         render :json => {:state => {:code => 0}, :data => @business }
       else

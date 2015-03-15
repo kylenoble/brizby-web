@@ -3,13 +3,18 @@ class Avatar < ActiveRecord::Base
 
 	BUCKET_NAME = ENV["AWS_BUCKET"]
 
-  has_attached_file :image
+  has_attached_file :image,
+                    :styles => { :thumbnail => "150x150>", :med =>  "300x300>", :lrg => "450x4500>" },
+                    :default_url => "/images/default_:style_avatar.png"
 
   validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
-  validates :direct_upload_url, presence: true
    
-  before_validation :set_upload_attributes
-  after_create :queue_finalize_and_cleanup
+  before_validation do
+    set_upload_attributes if attribute_present?("direct_upload_url")
+  end 
+  after_create do 
+    queue_finalize_and_cleanup if attribute_present?("direct_upload_url")
+  end
 
   # Store an unescaped version of the escaped URL that Amazon returns from direct upload.
   def direct_upload_url=(escaped_url)
@@ -39,7 +44,7 @@ class Avatar < ActiveRecord::Base
     avatar.processed = true
     avatar.save
     
-    #s3.buckets[BUCKET_NAME].objects[direct_upload_url_data].delete
+    s3.buckets[BUCKET_NAME].objects[direct_upload_url_data].delete
   end
       
   protected

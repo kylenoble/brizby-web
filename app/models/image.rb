@@ -43,7 +43,7 @@ class Image < ActiveRecord::Base
     image.processed = true
     image.save
     
-    #s3.buckets[BUCKET_NAME].objects[direct_upload_url_data].delete
+    s3.buckets[BUCKET_NAME].objects[direct_upload_url_data].delete
   end
       
   protected
