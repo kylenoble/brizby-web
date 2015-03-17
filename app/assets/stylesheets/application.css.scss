@@ -1,5 +1,5 @@
 /*
-*= bootstrap/dist/css/bootstrap
+*= require bootstrap/dist/css/bootstrap
 *= require_self
 */
 
@@ -15,7 +15,9 @@
 @import "header";
 @import "login";
 
-
+body {
+	margin-top: $header-height + $header-hangover + 5;
+}
 
 .orange-outline {
 	border: 3px solid $brizby_orange;

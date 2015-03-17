@@ -1,6 +1,5 @@
 (function (app) {
 	app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-		console.log("app initialized");
 		$stateProvider
     		.state('feed', {
     			url: '/feed',
@@ -9,8 +8,11 @@
 
     	$urlRouterProvider.otherwise('feed');
     }]);
-}(angular.module('Brizby', [
+}(angular.module('brizby', [
 	// Module dependencies will go here
 	'ui.router',
-	'templates'
+	'templates',
+
+	// Application modules
+	'brizby.headerCtrl'
 ])));

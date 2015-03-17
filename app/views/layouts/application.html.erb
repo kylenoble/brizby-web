@@ -9,7 +9,8 @@
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
-<body ng-app="Brizby">
-  <ui-view></ui-view>
+<body ng-app="brizby">
+  <div ng-include="'header/_header.html'"></div>
+  <div ui-view></div>
 </body>
 </html>
