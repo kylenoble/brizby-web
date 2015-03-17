@@ -32,7 +32,7 @@ gem 'jbuilder'
 gem 'kaminari'
 gem 'responders'
 gem  'nokogiri'
-gem 'bootstrap-sass', '~> 3.3.2'
+gem 'angular-rails-templates'
 
 group :development do
   gem "bundler-audit"

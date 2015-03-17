@@ -1,3 +1,8 @@
+/*
+*= bootstrap/dist/css/bootstrap
+*= require_self
+*/
+
 @charset 'utf-8';
 
 @import 'normalize-rails';
@@ -5,8 +10,6 @@
 @import 'base/grid-settings';
 @import 'neat';
 @import 'base/base';
-@import "bootstrap-sprockets";
-@import "bootstrap";
 @import "_colors";
 @import "_variables";
 @import "header";

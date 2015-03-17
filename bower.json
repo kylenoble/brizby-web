@@ -1,0 +1,21 @@
+{
+  "name": "udealio-web",
+  "version": "0.0.0",
+  "homepage": "https://github.com/kylenoble/udealio-web",
+  "authors": [
+    "Brizby development team"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.14",
+    "angular-ui-router": "~0.2.13",
+    "bootstrap": "~3.3.4"
+  }
+}

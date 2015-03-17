@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   acts_as_token_authentication_handler_for User, fallback_to_devise: false
   acts_as_token_authentication_handler_for Business, fallback_to_devise: false
 
+  def angular
+    render 'layouts/application'
+  end
+
   protected
 
   def after_sign_in_path_for(resource)
