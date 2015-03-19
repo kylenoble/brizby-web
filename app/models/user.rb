@@ -21,11 +21,7 @@ class User < ActiveRecord::Base
     (user_following.all + business_following.all)
   end
 
-  has_many :comments
-  has_many :commented_posts, through: :comments,
-           source: :commentable, source_type: 'Post'
-  has_many :commented_deals, through: :comments,
-          source: :commentable, source_type: 'Deal'
+  has_many :comments, as: :userable, dependent: :destroy
 
   has_many :loves, as: :loveable, dependent: :destroy
   has_many :posts, as: :postable, dependent: :destroy

@@ -1,16 +1,11 @@
 json.results 
-	if @businesses
-		json.businesses @businesses do |business|
-			json.id business.id
-			json.name business.name
-			json.avatar	business.avatar.image.url(:medium)
+	json.users @users do |user|
+		json.id user.id
+		json.name user.name
+		json.avatar	user.avatar.image.url(:medium)
+		if user.has_attribute?(:category)
+			json.type "business"
+		else
+			json.type "user"
 		end
-	elsif @users
-		json.users @users do |user|
-			json.id user.id
-			json.name user.name
-			json.avatar	user.avatar.image.url(:medium)
-		end
-	else
-		[]
 	end

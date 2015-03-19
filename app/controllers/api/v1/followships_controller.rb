@@ -1,5 +1,6 @@
 class Api::V1::FollowshipsController < Api::BaseController
-	before_action :set_current_user
+	before_action :set_current_user 
+	before_action :set_current_business
 
 	def index
 		if @business.nil?
@@ -11,22 +12,21 @@ class Api::V1::FollowshipsController < Api::BaseController
 			else
 				@users = []
 			end
-			respond_with @users
 		elsif @user.nil?
 			if params[:type] == "followers"
-				@businesses = @business.followers.page(params[:page])
+				@users = @business.followers.page(params[:page])
                                 .per(params[:page_size])
 			elsif params[:type] == "following"
-				@businesses = @business.following.page(params[:page])
+				@users = @business.following.page(params[:page])
                                 .per(params[:page_size])
 			else
-				@businesses = []
-				respond_with @businesses
+				@users = []
 			end
 		else
-			@results = []
-			respond_with @results
+			@users = []
 		end
+
+		respond_with @users
 	end
 
 	def create
@@ -63,14 +63,18 @@ class Api::V1::FollowshipsController < Api::BaseController
 	private
 
 	def set_current_user
-		@user = User.find(params[:current_user_id])
+		if params[:user_type] == "user"
+			@user = User.find(params["user_type_id"])
+		end
 	end
 
 	def set_current_business
-		@business = Business.find(params["api_v1_followship"][:current_business_id])
+		if params[:user_type] == "business"
+			@business = Business.find(params["user_type_id"])
+		end
 	end
 
 	def followship_params
-		params.require(:api_v1_followship).permit(:current_user_id, :current_business_id, :user_followed_id, :business_followed_id, :type, :page, :page_size)
+		params.require(:api_v1_followship).permit(:current_user_id, :current_business_id, :user_followed_id, :business_followed_id, :user_type, :user_type_id, :type, :page, :page_size)
 	end
 end

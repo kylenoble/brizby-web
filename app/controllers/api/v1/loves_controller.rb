@@ -6,7 +6,6 @@ class Api::V1::LovesController < Api::BaseController
 
 	def create
 		@love = Love.new(love_params)
-		puts @love
 		if @love.save 
 			render :json => {:state => {:code => 0}, :data => "Successfully Loved" }
 		else 

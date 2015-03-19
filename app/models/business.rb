@@ -17,11 +17,7 @@ class Business < ActiveRecord::Base
                                    dependent:   :destroy
   has_many :followers, through: :passive_followships, source: :user                                
 
-  has_many :comments
-  has_many :commented_posts, through: :comments,
-           source: :commentable, source_type: 'Post'
-  has_many :commented_deals, through: :comments,
-          source: :commentable, source_type: 'Deal'
+  has_many :comments, as: :userable, dependent: :destroy
 
   has_many :deals
   has_many :posts, as: :postable, dependent: :destroy
