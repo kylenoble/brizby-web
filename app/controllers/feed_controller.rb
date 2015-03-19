@@ -6,7 +6,7 @@ class FeedController < ApplicationController
   		@user = current_user
 
       if feed_params[:type] == "global"
-        @activities = Activity.where("category = ? OR category = 'global'", feed_params[:category]).(order("created_at desc")
+        @activities = Activity.where("category = ? OR category = 'global'", feed_params[:category]).(order("created_at desc"))
       elsif feed_params[:type] == "local"
         @activities = Activity.near([feed_params[:lat], feed_params[:lon]], feed_params[:distance]).where("category = ? OR category = 'global'", feed_params[:category]).order("created_at desc") 
       else 

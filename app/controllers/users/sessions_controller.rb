@@ -14,9 +14,16 @@ class Users::SessionsController < Devise::SessionsController
 
   def destroy
     if user_signed_in?
-      sign_out_and_redirect(current_user)
+      sign_out
+      render :status => 200,
+             :json => { :error => false,
+                        :message => "Logged out"
+             }
     else
-      render 'Error. Unable to logout. Please make sure you are logged in.'
+      render :status => 200,
+             :json => { :error => true,
+                        :message => 'Unable to logout. Please make sure you are logged in.'
+             }
     end
   end
 

@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   root to: 'application#angular'
+  # root "feed#index"
   resources :posts
 
   get 'activities/index'
-  #get 'feed' => 'feed#index'
+  get 'feed' => 'feed#index'
 
   resources :comments,  :deals, :activities, :posts
   resources :followships, only: [:create, :show, :index]

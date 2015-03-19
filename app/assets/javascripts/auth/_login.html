@@ -1,0 +1,17 @@
+<div class="container login-panel">
+  <img src="assets/b.svg" class="login-logo">
+  <div class="orange-outline login-form">
+    <form ng-submit="authCtrl.login()">
+      <div class="field">
+        <input type="email" class="form-control" placeholder="Email" ng-model="user.email">
+      </div>
+      <div class="field">
+        <input type="password" class="form-control" placeholder="Password" ng-model="user.password">
+      </div>
+      <input type="submit" class="login-button" value="Log In">
+    </form>
+  </div>
+  <div class="orange-outline login-form">
+    <button ui-sref='register'> Sign Up </button>
+  </div>
+</div>

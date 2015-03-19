@@ -1,5 +1,5 @@
-<div>  
-  <nav class="navbar navbar-default navbar-fixed-top">
+<div ng-controller="HeaderCtrl">  
+  <nav class="navbar navbar-default navbar-fixed-top" ng-show="signedIn()">
     <div class="navbar-header">
 	  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-nav-bar">
         <span class="sr-only">Toggle navigation</span>
@@ -19,19 +19,13 @@
 	      <li class="last-nav-item"><a href="#">SETTINGS</a></li>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
-	      <li class="dropdown">
-	        <a href="#" class="dropdown-toggle user-dropdown" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user nav-user-icon" aria-hidden="true"></span>
-	          NAME
-	        </a>
-	        <ul class="dropdown-menu" role="menu">
-              <li>
-                <a href="#">LOG IN</a>
-                <a href="#">LOG OUT</a>
-              </li>
-            </ul>
+	      <li>
+	        <a href="#" class="dropdown-toggle user-dropdown" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user nav-user-icon" aria-hidden="true"></span>{{user.email}}</a>
 	      </li>
+          <li><a ui-sref="login" ng-hide="signedIn()">LOG IN</a></li>
+          <li><a href="#" ng-click="logout()" ng-show="signedIn()">LOG OUT</a></li>
 	    </ul>
 	  </div>
     </div>
-  </nav>
+  </nav>	
 </div>  
