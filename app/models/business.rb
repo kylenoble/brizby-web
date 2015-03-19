@@ -1,4 +1,6 @@
 class Business < ActiveRecord::Base
+  max_paginates_per 50
+
   acts_as_token_authenticatable
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

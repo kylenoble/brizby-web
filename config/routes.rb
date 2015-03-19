@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   get 'activities/index'
   #get 'feed' => 'feed#index'
 
-  resources :comments,  :deals, :activities, :posts
+  resources :comments, only: [:create, :index]  
+  resources :deals, :activities, :posts
   resources :followships, only: [:create, :show, :index]
 	delete 'followships/unfollow', :to => 'followships#destroy'
 
@@ -35,6 +36,8 @@ Rails.application.routes.draw do
 			get 'feed' => 'feed#index'
 			resources :followships, only: [:create, :show, :index]
 		  delete 'followships/unfollow', :to => 'followships#destroy'
+
+		  resources :comments, only: [:create, :index]
 
 		  resources :loves, only: [:create, :show, :index]
 			delete 'loves/unlove', :to => 'loves#destroy'

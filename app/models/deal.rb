@@ -1,6 +1,8 @@
 class Deal < ActiveRecord::Base
 	include PublicActivity::Model
 
+	max_paginates_per 50
+
 	belongs_to :business
 	has_and_belongs_to_many :users
 	

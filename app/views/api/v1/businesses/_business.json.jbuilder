@@ -1,1 +1,3 @@
-json.(business, :id, :name, :avatar)
+json.id business.id
+json.name business.name
+json.avatar business.avatar.image.url(:med)

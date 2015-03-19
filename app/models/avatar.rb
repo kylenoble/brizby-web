@@ -10,10 +10,10 @@ class Avatar < ActiveRecord::Base
   validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
    
   before_validation do
-    set_upload_attributes if attribute_present?("direct_upload_url")
+    set_upload_attributes if attribute_present?("avatar_attributes")
   end 
   after_create do 
-    queue_finalize_and_cleanup if attribute_present?("direct_upload_url")
+    queue_finalize_and_cleanup if attribute_present?("avatar_attributes")
   end
 
   # Store an unescaped version of the escaped URL that Amazon returns from direct upload.

@@ -38,6 +38,7 @@ group :development do
   gem "bundler-audit"
   gem "spring"
   gem "spring-commands-rspec"
+  gem "bullet"
 end
 
 group :development, :test do

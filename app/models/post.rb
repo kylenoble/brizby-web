@@ -1,5 +1,7 @@
 class Post < ActiveRecord::Base
 	include PublicActivity::Model
+
+	max_paginates_per 50
 	
   has_many :images, as: :imageable, dependent: :destroy
 	has_many :comments, as: :commentable, dependent: :destroy

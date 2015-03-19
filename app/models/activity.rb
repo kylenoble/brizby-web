@@ -1,4 +1,4 @@
 class Activity < ActiveRecord::Base
 	geocoded_by [:latitude, :longitude]
-	paginates_per 10
+	max_paginates_per 50
 end
