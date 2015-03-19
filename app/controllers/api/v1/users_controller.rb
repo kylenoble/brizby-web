@@ -1,6 +1,17 @@
 class Api::V1::UsersController < Api::V1::BaseController
 	#before_filter :authenticate_user!
 
+	def index
+		if params[:type] == "followers"
+			@users = current_api_v1_user.followers
+		elsif params[:type] == "followees"
+			@users = current_api_v1_user.followees
+		else
+			@users = []
+		end
+
+		respond_with @users
+	end
 
 	private
 
@@ -10,10 +21,6 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
 	def user_params
-  	params.require(:api_v1_user).permit(:id, :username, :email, :home_city)
+  	params.require(:api_v1_user).permit(:id, :email, :home_city, :user_type, :type)
 	end
-
-	def query_params
-  	params.permit(:id, :username, :email, :home_city)
-  end
 end
