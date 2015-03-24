@@ -1,0 +1,106 @@
+jQuery(document).ready(function($){
+
+	
+	//Arrow rotation
+	$(window).scroll(function(){
+
+		if( $(this).scrollTop() >= 200 ) {
+			$('.diamond span, .diamond').addClass('rotate');
+		} else {
+			$('.diamond span, .diamond').removeClass('rotate');
+		}
+
+	});
+
+
+  	//ScrollTo
+  	$(function() {
+  		$('a[href*=#]:not([href=#])').click(function() {
+  			if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+  				var target = $(this.hash);
+  				target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+  				if (target.length) {
+  					$('html,body').animate({
+  						scrollTop: target.offset().top-100
+  					}, 500);
+  					return false;
+  				}
+  			}
+  		});
+  	});
+
+
+	//Replace SVG images with inline SVG
+	$('img.svg-raw').each(function(){
+		var $img = $(this);
+		var imgID = $img.attr('id');
+		var imgClass = $img.attr('class');
+		var imgURL = $img.attr('src');
+
+		$.get(imgURL, function(data) {
+			// Get the SVG tag, ignore the rest
+			var $svg = $(data).find('svg');
+			// Add replaced image's ID to the new SVG
+			if (typeof imgID !== 'undefined') {
+				$svg = $svg.attr('id', imgID);
+			}
+			// Add replaced image's classes to the new SVG
+			if (typeof imgClass !== 'undefined') {
+				$svg = $svg.attr('class', imgClass+' replaced-svg');
+			}
+			// Remove any invalid XML tags as per http://validator.w3.org
+			$svg = $svg.removeAttr('xmlns:a');
+			// Replace image with new SVG
+			$img.replaceWith($svg);
+		});
+	});
+
+
+	//Prepend About link to category menu
+	$('.menu ul').prepend('<li><a href="#">About</a></li>');
+
+
+	//Post class generation
+	var xClass = ['left', 'center', 'right'];
+	var zClass = ['top', 'middle', 'bottom'];
+
+	$('.post img').each(function(){
+		var prevValue = Math.floor(Math.random()*zClass.length);
+    var currentValue = Math.floor(Math.random()*zClass.length);
+    
+    while (currentValue == prevValue) {
+        currentValue = Math.floor(Math.random()*zClass.length);		
+    }
+
+		$(this).addClass(zClass[~~(currentValue)]);
+		$(this).addClass(xClass[~~(currentValue)]);
+		prevValue = currentValue;
+
+		if ($(this).hasClass('middle')) {
+			$(this).attr('data-stellar-ratio', .75);
+		} else if ($(this).hasClass('bottom')) {
+			$(this).attr('data-stellar-ratio', .5);
+		} else {
+			$(this).attr('data-stellar-ratio', 1);
+		}
+
+
+		$(this).attr( {
+			'data-stellar-vertical-offset': (Math.random()*1000),
+		});
+
+	});
+
+
+	//Parallax scrolling
+	$(window).stellar({
+		horizontalScrolling: false,
+		verticalScrolling: true,
+		scrollProperty: 'scroll',
+		positionProperty: 'transform',
+		hideDistantElements: false
+	});
+
+
+
+});

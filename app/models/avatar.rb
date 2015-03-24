@@ -4,16 +4,17 @@ class Avatar < ActiveRecord::Base
 	BUCKET_NAME = ENV["AWS_BUCKET"]
 
   has_attached_file :image,
-                    :styles => { :thumbnail => "150x150>", :med =>  "300x300>", :lrg => "450x4500>" },
-                    :default_url => "/images/default_:style_avatar.png"
+                    :styles => { :thumbnail => "150x150#", :med =>  "300x300#", :lrg => "450x450#" }
 
-  validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
+  do_not_validate_attachment_file_type :image
+  validates :direct_upload_url, presence: true
    
-  before_validation do
-    set_upload_attributes if attribute_present?("avatar_attributes")
-  end 
-  after_create do 
-    queue_finalize_and_cleanup if attribute_present?("avatar_attributes")
+  before_validation(on: :create) do 
+    self.set_upload_attributes
+  end
+
+  after_create(on: :create) do 
+    self.queue_finalize_and_cleanup
   end
 
   # Store an unescaped version of the escaped URL that Amazon returns from direct upload.
@@ -35,14 +36,12 @@ class Avatar < ActiveRecord::Base
     avatar = Avatar.find(id)
     direct_upload_url_data = URI.parse(avatar.direct_upload_url).path[8..-1].to_s
     s3 = AWS::S3.new
-    
-    avatar.image = URI.parse(URI.escape(avatar.direct_upload_url))
-    paperclip_file_path = "avatars/#{id}/original/#{direct_upload_url_data}"
-    s3.buckets[BUCKET_NAME].objects[paperclip_file_path].copy_from("#{direct_upload_url_data}")    
 
+    avatar.image = s3.buckets[BUCKET_NAME].objects[direct_upload_url_data].url_for(:read)
     avatar.image.reprocess!
+
     avatar.processed = true
-    avatar.save
+    avatar.save!
     
     s3.buckets[BUCKET_NAME].objects[direct_upload_url_data].delete
   end
@@ -56,11 +55,11 @@ class Avatar < ActiveRecord::Base
     direct_upload_url_data = URI.parse(direct_upload_url).path[8..-1].to_s
     s3 = AWS::S3.new
     direct_upload_head = s3.buckets[BUCKET_NAME].objects[direct_upload_url_data].head
-   	self.image_file_name     = direct_upload_url_data[direct_upload_url_data]
+    self.image_file_name     = direct_upload_url_data[direct_upload_url_data]
     self.image_file_size     = direct_upload_head.content_length
     self.image_content_type  = direct_upload_head.content_type
     self.image_updated_at    = direct_upload_head.last_modified
-    self.processed 					 = false    
+    self.processed           = false    
   rescue AWS::S3::Errors::NoSuchKey => e
     tries -= 1
     if tries > 0
@@ -77,5 +76,8 @@ class Avatar < ActiveRecord::Base
   end
  
 end
+
+
+
 
 

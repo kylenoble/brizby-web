@@ -2,10 +2,7 @@ module V1
   class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
     def create
       @user = User.create(user_params)
-      if params[:avatar_attributes].nil?
-        @user.build_avatar
-      end
-
+      
       if @user.valid? && @user.save!
         sign_in(@user)
         render :json => {:state => {:code => 0}, :data => @user }

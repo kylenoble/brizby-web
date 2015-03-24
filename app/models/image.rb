@@ -35,13 +35,11 @@ class Image < ActiveRecord::Base
     direct_upload_url_data = URI.parse(image.direct_upload_url).path[8..-1].to_s
     s3 = AWS::S3.new
 
-    image.image = URI.parse(URI.escape(image.direct_upload_url))
-    paperclip_file_path = "images/#{id}/original/#{direct_upload_url_data}"
-    s3.buckets[BUCKET_NAME].objects[paperclip_file_path].copy_from("#{direct_upload_url_data}")
-
+    image.image = s3.buckets[BUCKET_NAME].objects[direct_upload_url_data].url_for(:read)
     image.image.reprocess!
+
     image.processed = true
-    image.save
+    image.save!
     
     s3.buckets[BUCKET_NAME].objects[direct_upload_url_data].delete
   end
