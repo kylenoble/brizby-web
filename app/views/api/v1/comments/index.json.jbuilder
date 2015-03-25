@@ -1,5 +1,6 @@
 json.comments @comments.each do |comment|
 	json.id = comment.id
+	json.text = comment.text
 	if comment.userable_type == "user"
 		@user = User.find(comment.userable_id)
     json.user do
