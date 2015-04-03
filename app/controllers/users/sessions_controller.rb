@@ -7,9 +7,11 @@ class Users::SessionsController < Devise::SessionsController
   skip_before_filter :verify_signed_out_user
 
   def create
-    @user = warden.authenticate!(auth_options)
-    sign_in(@user)
-    respond_with @user, :location => after_sign_in_path_for(@user)
+    if user_signed_in?
+      @user = warden.authenticate!(auth_options)
+      sign_in(@user)
+      respond_with @user, :location => after_sign_in_path_for(@user)
+    end
   end
 
   def destroy

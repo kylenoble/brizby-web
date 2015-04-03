@@ -12,5 +12,12 @@
 <body ng-app="brizby">
   <div ng-include="'header/_header.html'"></div>
   <div ui-view></div>
+  <%= javascript_tag do %>
+  	angular.module('brizby.config', []).constant('AWS_CREDS', {
+      bucket: "<%= ENV["AWS_BUCKET"] %>",
+      access_key: "<%= ENV["AWS_ACCESS_KEY"] %>",
+      secret_key: "<%= ENV["AWS_SECRET_ACCESS_KEY"] %>"
+    });
+  <% end %>
 </body>
 </html>

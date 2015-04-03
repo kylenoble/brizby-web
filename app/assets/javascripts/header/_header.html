@@ -20,7 +20,7 @@
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
 	      <li>
-	        <a href="#" class="dropdown-toggle user-dropdown" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user nav-user-icon" aria-hidden="true"></span>{{user.email}}</a>
+	        <a href="#" class="dropdown-toggle user-dropdown" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user nav-user-icon" aria-hidden="true"></span> {{user.email}} </a>
 	      </li>
           <li><a ui-sref="login" ng-hide="signedIn()">LOG IN</a></li>
           <li><a href="#" ng-click="logout()" ng-show="signedIn()">LOG OUT</a></li>

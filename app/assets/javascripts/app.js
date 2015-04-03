@@ -4,7 +4,13 @@
     		.state('feed', {
     			url: '/feed',
     			templateUrl: 'feed/_feed.html',
-    			controller: 'HeaderCtrl as headerCtrl'
+    			controller: 'HeaderCtrl as headerCtrl',
+                onEnter: ['$state', 'Auth', function($state, Auth) {
+                    Auth.currentUser().then(function (){
+                    }, function() {
+                        $state.go('login');
+                    });
+                }]
     		})
 
     		.state('login', {
@@ -36,8 +42,10 @@
 	'ui.router',
 	'templates',
 	'Devise',
+    'ngFileUpload',
 
 	// Application modules
 	'brizby.headerCtrl',
-    'brizby.authCtrl'
+    'brizby.authCtrl',
+    'brizby.config'
 ])));

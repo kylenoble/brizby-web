@@ -2,12 +2,18 @@
   <h1>Register</h1>
 </div>
 
+<label><input type="radio" ng-model="authCtrl.userType" value="User">User</label>
+<label><input type="radio" ng-model="authCtrl.userType" value="Business">Business</label>
 <form ng-submit="authCtrl.register()">
   <div class="input-group">
-    <input type="email" class="form-control" placeholder="Email" ng-model="user.email">
+    <input type="email" class="form-control" placeholder="Email" ng-model="authCtrl.user.email">
   </div>
   <div class="input-group">
-    <input type="password" class="form-control" placeholder="Password" ng-model="user.password">
+    <input type="password" class="form-control" placeholder="Password" ng-model="authCtrl.user.password">
   </div>
-  <input type="submit" class="btn btn-default" value="Register">
+  <br>
+  <a class="btn btn-primary" ng-file-select ng-model="authCtrl.file" ng-multiple="false" accept="image/*">Profile Picture</a> {{authCtrl.file[0].name}}
+  <br>
+  <br>
+  <input type="submit" class="btn btn-primary" value="Register">
 </form>
